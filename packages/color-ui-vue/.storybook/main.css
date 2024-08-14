@@ -55,38 +55,6 @@
     --code-content-height: 600px;
   }
 
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --primary: 20 100% 71%;
-    --primary-hover: 23 55% 53%;
-    --primary-foreground: 30 5% 10%;
-    --primary-active: 19 100% 86%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-
-    --linear-gradient: linear-gradient(
-      to bottom right,
-      #7251a8,
-      #bd539d,
-      #e66381,
-      #e68a63,
-      #e6b355,
-      #e0e065
-    );
-
-    --text-linear: 180deg, #7251a8 15%, #bd539d 30%, #e66381 45%, #e68a63 60%, #e6b355 75%, #e0e065;
-  }
-
   /* === Scrollbars === */
 
   ::-webkit-scrollbar {
