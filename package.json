@@ -1,0 +1,39 @@
+{
+  "name": "color-ui-vue",
+  "version": "0.0.1",
+  "description": "",
+  "private": true,
+  "repository": "color-ui-vue/color-ui-vue",
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky install",
+    "play:vue3": "pnpm --filter vue3",
+    "build": "pnpm --filter color-ui-vue build",
+    "story:dev": "pnpm --filter color-ui-vue story:dev",
+    "story:build": "pnpm --filter color-ui-vue story:build",
+    "docs": "pnpm --filter docs",
+    "docs:gen": "pnpm --filter color-ui-vue story:build && pnpm --filter docs docs:gen"
+  },
+  "keywords": [],
+  "author": "Theo Rodriguez",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.0.1"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}

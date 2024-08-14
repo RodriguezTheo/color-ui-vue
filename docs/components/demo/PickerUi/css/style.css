@@ -1,0 +1,224 @@
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --radius: 0.5rem;
+}
+
+.SliderArea {
+  height: 10rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.SliderAreaThumb {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 100%;
+  border-width: 2px;
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--background));
+  cursor: pointer;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.SliderAreaThumb:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.SliderAreaThumb:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.SliderAreaThumb[data-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.RenderRoot {
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  border-radius: 100%;
+}
+
+.EyeDropperTrigger {
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: calc(var(--radius) - 2px);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-width: 1px;
+  border-color: hsl(var(--input));
+  background-color: hsl(var(--background));
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.EyeDropperTrigger:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.EyeDropperTrigger:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.EyeDropperTrigger:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.PickerUiContent {
+  display: flex;
+  column-gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.SliderRoot {
+  display: flex;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  height: 0.75rem;
+  width: 100%;
+}
+
+.SliderContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  row-gap: 0.5rem;
+}
+
+.SliderThumb {
+  display: block;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 100%;
+  border-width: 2px;
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--background));
+}
+
+.SliderThumb:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.ModeRoot {
+  display: flex;
+  flex-direction: column;
+}
+
+.ModeItem {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.ModeContent {
+  display: flex;
+  column-gap: 0.5rem;
+  width: 100%;
+}
+
+.ModeItemHex {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ModeItemInput {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  border-width: 1px;
+  border-radius: calc(var(--radius) - 2px);
+  border-color: hsl(var(--input));
+  background-color: hsl(var(--background));
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.ModeItemInput:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.ModeItemInput::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+.ModeItemInput:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.ModeTrigger {
+  margin-top: 0.5rem;
+  height: 2.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: calc(var(--radius) - 2px);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-width: 1px;
+  border-color: hsl(var(--input));
+  background-color: hsl(var(--background));
+
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.ModeTrigger:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.ModeTrigger:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.ModeTrigger:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.PickerUiModeContent {
+  display: flex;
+  column-gap: 0.5rem;
+  width: 100%;
+}

@@ -1,0 +1,63 @@
+<br />
+<p align="center">
+  <a href="https://github.com/color-ui-vue/color-ui-vue">
+    <img src="https://res.cloudinary.com/ds42hzeif/image/upload/v1720389675/color-ui-vue/color-ui-vue-logo.svg" alt="Logo" width="150" />
+  </a>
+
+<h1 align="center">
+Color UI Vue
+</h1>
+<p align="center">
+A Color UI component<br>
+Color UI is an unstyled, customisable component with built in accessibility with Radix-vue.
+<p>
+
+<p align="center">
+<a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"></a>
+<a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"></a>
+<a href="https://github.com/color-ui-vue/color-ui-vue" target="__blank"></a>
+</p>
+
+<p align="center">
+ <a href="https://color-ui-vue.com">Documentation</a> | <a href="https://www.color-ui-vue.com/overview/getting-started.html">Getting Started</a> | <a href="https://www.color-ui-vue.com/">Examples</a>
+</p>
+
+![hero image](https://res.cloudinary.com/ds42hzeif/image/upload/v1720389185/color-ui-vue/heropicture.png)
+<em>design by: [Rodriguez Théo](https://github.com/RodriguezTheo)</em>
+
+## Installation
+
+```bash
+pnpm add color-ui-vue
+```
+
+```bash
+npm install color-ui-vue
+```
+
+```bash
+yarn add color-ui-vue
+```
+
+## Documentation
+
+For full documentation, visit [color-ui-vue.com](https://color-ui-vue.com).
+
+## Releases
+
+For changelog, visit [releases](https://github.com/color-ui-vue/color-ui-vue/releases).
+
+## Contributing
+
+I would love to have your contributions! All PRs all welcomed! I need help for components, docs, tests, stories.
+
+## Author
+
+- [Rodriguez Théo](https://github.com/RodriguezTheo)
+
+## Credits
+
+All credits go to these open-source works and resources
+
+- [Radix Vue](https://www.radix-vue.com/) for doing all the hard work to make sure components are accessible for vue
+- [Ark UI](https://ark-ui.com) for the inspiration component

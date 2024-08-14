@@ -1,0 +1,34 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "esnext",
+    "jsx": "preserve",
+    "lib": ["esnext", "dom"],
+    "baseUrl": ".",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "resolveJsonModule": true,
+    "types": ["vitepress/client", "vue"],
+    "strict": true,
+    "declaration": false,
+    "outDir": "dist",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./.vitepress/**/*.ts",
+    "./.vitepress/components/**/*.vue",
+    "./components/**/*.vue",
+    "./.vitepress/layouts/*.vue",
+    "./.vitepress/plugins/*.ts",
+    "./*.ts",
+    "./**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}
