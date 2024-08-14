@@ -13,9 +13,8 @@ Color UI is an unstyled, customisable component with built in accessibility with
 <p>
 
 <p align="center">
-<a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"></a>
-<a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"></a>
-<a href="https://github.com/RodriguezTheo/color-ui-vue/" target="__blank"></a>
+<a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"><img src="https://img.shields.io/npm/v/color-ui-vue?style=flat&colorA=002438&colorB=41c399" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"><img src="https://img.shields.io/npm/dm/color-ui-vue?style=flat&colorA=002438&colorB=41c399" alt="NPM Downloads" /></a>
 </p>
 
 <p align="center">
