@@ -13,7 +13,7 @@
     "story:dev": "pnpm --filter color-ui-vue story:dev",
     "story:build": "pnpm --filter color-ui-vue story:build",
     "docs": "pnpm --filter docs",
-    "docs:gen": "pnpm --filter color-ui-vue story:build && pnpm --filter docs docs:gen"
+    "docs:gen": "pnpm --filter color-ui-vue build && pnpm --filter color-ui-vue story:build && pnpm --filter docs docs:gen"
   },
   "keywords": [],
   "author": "Theo Rodriguez",
