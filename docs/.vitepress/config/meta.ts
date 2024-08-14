@@ -15,12 +15,12 @@ export const styles = {
 
 /* Head */
 export const head = {
-  url: "https://color-ui-vue.com",
-  image: "https://color-ui-vue.com/hero.png",
+  url: "https://color-ui-vue.vercel.app",
+  image: "https://color-ui-vue.vercel.app/hero.png",
   version: "Color UI vue v0.0.1",
-  link: "https://color-ui-vue.com",
-  github: "https://github.com/color-ui-vue/color-ui-vue",
-  releases: "https://github.com/color-ui-vue/color-ui-vue/releases"
+  link: "https://color-ui-vue.vercel.app",
+  github: "https://github.com/RodriguezTheo/color-ui-vue",
+  releases: "https://github.com/RodriguezTheo/color-ui-vue/releases"
 };
 
 /* PWA runtime caching urlPattern regular expressions */
