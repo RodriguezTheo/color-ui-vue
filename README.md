@@ -1,6 +1,6 @@
 <br />
 <p align="center">
-  <a href="https://github.com/color-ui-vue/color-ui-vue">
+  <a href="https://github.com/RodriguezTheo/color-ui-vue/">
     <img src="https://res.cloudinary.com/ds42hzeif/image/upload/v1720389675/color-ui-vue/color-ui-vue-logo.svg" alt="Logo" width="150" />
   </a>
 
@@ -15,11 +15,11 @@ Color UI is an unstyled, customisable component with built in accessibility with
 <p align="center">
 <a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"></a>
 <a href="https://www.npmjs.com/package/color-ui-vue" target="__blank"></a>
-<a href="https://github.com/color-ui-vue/color-ui-vue" target="__blank"></a>
+<a href="https://github.com/RodriguezTheo/color-ui-vue/" target="__blank"></a>
 </p>
 
 <p align="center">
- <a href="https://color-ui-vue.com">Documentation</a> | <a href="https://www.color-ui-vue.com/overview/getting-started.html">Getting Started</a> | <a href="https://www.color-ui-vue.com/">Examples</a>
+ <a href="https://color-ui-vue.vercel.app">Documentation</a> | <a href="https://color-ui-vue.vercel.app/docs/overview/introduction.html">Getting Started</a> | <a href="https://color-ui-vue.vercel.app/docs/components/picker-ui.html">Examples</a>
 </p>
 
 ![hero image](https://res.cloudinary.com/ds42hzeif/image/upload/v1720389185/color-ui-vue/heropicture.png)
@@ -41,11 +41,11 @@ yarn add color-ui-vue
 
 ## Documentation
 
-For full documentation, visit [color-ui-vue.com](https://color-ui-vue.com).
+For full documentation, visit [color-ui-vue](https://color-ui-vue.vercel.app).
 
 ## Releases
 
-For changelog, visit [releases](https://github.com/color-ui-vue/color-ui-vue/releases).
+For changelog, visit [releases](https://github.com/RodriguezTheo/color-ui-vue/releases).
 
 ## Contributing
 
