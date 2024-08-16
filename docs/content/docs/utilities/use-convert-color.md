@@ -1,5 +1,4 @@
 ---
-
 title: Use convert color
 description: Convert color to different formats.
 ---
@@ -10,15 +9,15 @@ description: Convert color to different formats.
 Convert color to different formats.
 </Description>
 
-When you need to convert a color to a different format, you can use the `useConvertColor` composable. 
+When you need to convert a color to a different format, you can use the `useConvertColor` composable.
 This composable provides a function that takes a color and format color and returns the color in the desired format.
 
 ## Usage
 
 ```typescript
-import { useConvertColor } from 'color-ui-vue';
+import { useConvertColor } from "color-ui-vue";
 
-const color = useConvertColor('#ff0000', 'hex', 'rgb'); 
+const color = useConvertColor("#ff0000", "hex", "rgb");
 // Output: { r: 255, g: 0, b: 0 }
 ```
 
@@ -34,7 +33,6 @@ export type HEXA = string;
 
 export type ColorSelected = RGB | RGBA | HSL | HSLA | HEX | HEXA;
 
-
 export declare function useFormatColor(
   inputColor: ColorSelected,
   inputFormat: "rgb" | "hsl" | "hex" | "rgba" | "hsla" | "hexa",
@@ -44,4 +42,4 @@ export declare function useFormatColor(
 
 ## Sources
 
-[Sources](https://github.com/color-ui-vue/color-ui-vue/blob/main/packages/color-ui-vue/src/shared/useConvertColor.ts) • [Docs](https://github.com/color-ui-vue/color-ui-vue/blob/main/docs/content/utilities/use-convert-color.md)
+[Sources](https://github.com/RodriguezTheo/color-ui-vue/blob/main/packages/color-ui-vue/src/shared/useConvertColor.tsc) • [Docs](https://github.com/RodriguezTheo/color-ui-vue/blob/main/docs/content/docs/utilities/use-convert-color.md)
