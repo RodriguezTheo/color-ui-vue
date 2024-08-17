@@ -47,7 +47,7 @@ const sideNav = [
   {
     text: "Utilities",
     collapsed: false,
-    items: [{ text: "useConvertColor", link: "/docs/utilities/use-convert-color" }]
+    items: [{ text: "useFormatColor", link: "/docs/utilities/use-format-color" }]
   }
 ];
 

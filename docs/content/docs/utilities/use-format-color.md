@@ -1,23 +1,23 @@
 ---
-title: Use convert color
-description: Convert color to different formats.
+title: Use format color
+description: Format color to different formats.
 ---
 
-# useConvertColor
+# useFormatColor
 
 <Description>
 Convert color to different formats.
 </Description>
 
-When you need to convert a color to a different format, you can use the `useConvertColor` composable.
+When you need to convert a color to a different format, you can use the `useFormatColor` composable.
 This composable provides a function that takes a color and format color and returns the color in the desired format.
 
 ## Usage
 
 ```typescript
-import { useConvertColor } from "color-ui-vue";
+import { useFormatColor } from "color-ui-vue";
 
-const color = useConvertColor("#ff0000", "hex", "rgb");
+const color = useFormatColor("#ff0000", "hex", "rgb");
 // Output: { r: 255, g: 0, b: 0 }
 ```
 
