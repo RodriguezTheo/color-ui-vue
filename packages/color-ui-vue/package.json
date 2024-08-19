@@ -7,7 +7,7 @@
   "homepage": "https://github.com/RodriguezTheo/color-ui-vue",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RodriguezTheo/color-ui-vue"
+    "url": "git+https://github.com/RodriguezTheo/color-ui-vue.git"
   },
   "keywords": [
     "color",
