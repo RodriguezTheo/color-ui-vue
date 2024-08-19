@@ -35,9 +35,12 @@ export interface SliderAreaRootProvider {
 </script>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, toRefs, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, toRefs } from "vue";
 import { provideSliderAreaRootContext } from "@/components/Base/SliderArea/context";
 import { useMouseInElement } from "@vueuse/core";
+
+const PAGE_KEYS = ["PageUp", "PageDown"];
+const ARROW_KEYS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 
 const props = withDefaults(defineProps<SliderAreaRootProps>(), {
   max: () => [100, 100],
@@ -101,8 +104,10 @@ const updatePositions = () => {
   if (!containerRef.value) {
     return;
   }
-  const x = (vModel.value[0] / (props.max[0] - props.min[0])) * elementWidth.value;
-  const y = (vModel.value[1] / (props.max[1] - props.min[1])) * elementHeight.value;
+
+  const { width, height } = containerRef.value.getBoundingClientRect();
+  const x = (vModel.value[0] / (props.max[0] - props.min[0])) * width;
+  const y = (vModel.value[1] / (props.max[1] - props.min[1])) * height;
 
   position.value = [x, y];
 };
@@ -201,15 +206,30 @@ const events = () => {
     }
 
     isSliding.value = true;
+
     let keyPos = position.value;
+    const { width, height } = containerRef.value.getBoundingClientRect();
+
     if (e.key === "ArrowUp") {
-      keyPos[1] = Math.max(0, keyPos[1] - 1);
+      keyPos[1] = Math.max(0, keyPos[1] - (e.ctrlKey ? 10 : 1));
     } else if (e.key === "ArrowDown") {
-      keyPos[1] = Math.min(elementHeight.value, keyPos[1] + 1);
+      keyPos[1] = Math.min(height, keyPos[1] + (e.ctrlKey ? 10 : 1));
     } else if (e.key === "ArrowLeft") {
-      keyPos[0] = Math.max(0, keyPos[0] - 1);
+      keyPos[0] = Math.max(0, keyPos[0] - (e.ctrlKey ? 10 : 1));
     } else if (e.key === "ArrowRight") {
-      keyPos[0] = Math.min(elementWidth.value, keyPos[0] + 1);
+      keyPos[0] = Math.min(width, keyPos[0] + (e.ctrlKey ? 10 : 1));
+    } else if (e.key === "Home") {
+      e.altKey ? (keyPos[1] = 0) : (keyPos[0] = 0);
+    } else if (e.key === "End") {
+      e.altKey ? (keyPos[1] = height) : (keyPos[0] = width);
+    } else if (e.key === "PageUp") {
+      e.altKey
+        ? (keyPos[0] = Math.max(0, keyPos[0] - 10))
+        : (keyPos[1] = Math.max(0, keyPos[1] - 10));
+    } else if (e.key === "PageDown") {
+      e.altKey
+        ? (keyPos[0] = Math.min(width, keyPos[0] + 10))
+        : (keyPos[1] = Math.min(height, keyPos[1] + 10));
     }
 
     onDrag(keyPos);
@@ -228,10 +248,6 @@ const events = () => {
   };
 };
 
-watch(vModel, () => {
-  updatePositions();
-});
-
 provideSliderAreaRootContext({
   modelValue: vModel,
   orientation,
@@ -247,6 +263,11 @@ onMounted(() => {
   }
 });
 
+const backgroundColor = computed(() => {
+  const { color } = props;
+  return `background:linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0)), linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0)), linear-gradient(to top, rgb(${color[0]}, ${color[1]}, ${color[2]}), rgb(${color[0]}, ${color[1]}, ${color[2]})); position: relative;`;
+});
+
 onBeforeUnmount(() => {
   events().cleanUp();
 });
@@ -258,24 +279,24 @@ onBeforeUnmount(() => {
     :dir="dir"
     :data-orientation="orientation"
     :aria-disabled="disabled"
-    style="position: relative"
+    :style="backgroundColor"
     tabindex="-1"
+    @keydown="
+      (event) => {
+        if (event.key === 'Home') {
+          event.preventDefault();
+        } else if (event.key === 'End') {
+          event.preventDefault();
+        } else if ([...PAGE_KEYS, ...ARROW_KEYS].includes(event.key)) {
+          event.preventDefault();
+        } else if (event.altKey) {
+          event.preventDefault();
+        }
+      }
+    "
     @mousedown="events().onDown"
     @touchdown="events().onDown"
   >
-    <div
-      :style="`background: rgb(${color[0]}, ${color[1]}, ${color[2]});  position: absolute; inset: 0; border-radius: inherit; overflow: hidden;`"
-      tabindex="-1"
-    >
-      <div
-        style="
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0)),
-            linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0));
-        "
-      />
-    </div>
     <slot />
   </div>
 </template>
