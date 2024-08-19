@@ -8,7 +8,6 @@ import {
   PickerUiModeItemLabel,
   PickerUiModeRoot,
   PickerUiModeTrigger,
-  PickerUiRenderBackground,
   PickerUiRenderRoot,
   PickerUiRoot,
   PickerUiSliderAlphaRoot,
@@ -33,9 +32,7 @@ const color = ref({ r: 100, g: 100, b: 100 });
       </PickerUiSliderMainRoot>
       <div class="flex gap-x-2">
         <div class="flex gap-x-2">
-          <PickerUiRenderRoot class="min-h-10 min-w-10 rounded-full">
-            <PickerUiRenderBackground />
-          </PickerUiRenderRoot>
+          <PickerUiRenderRoot class="min-h-10 min-w-10 rounded-full" />
           <PickerUiEyeDropperRoot>
             <PickerUiEyeDropperTrigger
               class="h-10 w-full px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground"

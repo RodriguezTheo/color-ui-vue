@@ -8,7 +8,6 @@ import {
   PickerUiModeItemLabel,
   PickerUiModeRoot,
   PickerUiModeTrigger,
-  PickerUiRenderBackground,
   PickerUiRenderRoot,
   PickerUiRoot,
   PickerUiSliderAlphaRoot,
@@ -30,9 +29,7 @@ const color = ref({ r: 100, g: 100, b: 100 });
       <PickerUiSliderMainThumb class="SliderAreaThumb" />
     </PickerUiSliderMainRoot>
     <div class="PickerUiContent">
-      <PickerUiRenderRoot class="RenderRoot">
-        <PickerUiRenderBackground />
-      </PickerUiRenderRoot>
+      <PickerUiRenderRoot class="RenderRoot" />
       <PickerUiEyeDropperRoot>
         <PickerUiEyeDropperTrigger class="EyeDropperTrigger">Y</PickerUiEyeDropperTrigger>
       </PickerUiEyeDropperRoot>
