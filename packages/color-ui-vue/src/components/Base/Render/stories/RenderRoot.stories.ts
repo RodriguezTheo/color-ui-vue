@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import RenderRoot from "@/components/Base/Render/RenderRoot.vue";
-import RenderBackground from "@/components/Base/Render/RenderBackground.vue";
 
 const meta = {
   title: "Base/Render/Root",
@@ -28,15 +27,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => ({
     components: {
-      RenderRoot,
-      RenderBackground
+      RenderRoot
     },
     setup: () => {
       return { args };
     },
-    template: `<RenderRoot class="h-10 w-10" :color="args.color" :alpha="args.alpha" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground">
-        <RenderBackground /> 
-      </RenderRoot>`
+    template: `<RenderRoot class="h-10 w-10" :color="args.color" :alpha="args.alpha" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground" />`
   })
 };
 
@@ -48,16 +44,13 @@ export const AsChild: Story = {
   },
   render: (args) => ({
     components: {
-      RenderRoot,
-      RenderBackground
+      RenderRoot
     },
     setup: () => {
       return { args };
     },
     template: `<RenderRoot class="h-10 w-10 block" :color="args.color" :alpha="args.alpha" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground">
-      <span>
-        <RenderBackground />
-      </span>
+      <span />
     </RenderRoot>`
   })
 };
@@ -70,14 +63,11 @@ export const HiddenBackground: Story = {
   },
   render: (args) => ({
     components: {
-      RenderRoot,
-      RenderBackground
+      RenderRoot
     },
     setup: () => {
       return { args };
     },
-    template: `<RenderRoot class="h-10 w-10" :color="args.color" :alpha="args.alpha" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground">
-        <RenderBackground />
-    </RenderRoot>`
+    template: `<RenderRoot class="h-10 w-10" :color="args.color" :alpha="args.alpha" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground" />`
   })
 };

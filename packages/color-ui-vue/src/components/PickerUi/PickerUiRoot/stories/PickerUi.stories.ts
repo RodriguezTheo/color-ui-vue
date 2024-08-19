@@ -9,7 +9,6 @@ import PickerUiModeItemInput from "@/components/PickerUi/PickerUiMode/PickerUiMo
 import PickerUiSliderMainRoot from "@/components/PickerUi/PickerUiSliderMain/PickerUiSliderMainRoot.vue";
 import PickerUiSliderMainThumb from "@/components/PickerUi/PickerUiSliderMain/PickerUiSliderMainThumb.vue";
 import PickerUiRenderRoot from "@/components/PickerUi/PickerUiRender/PickerUiRenderRoot.vue";
-import PickerUiRenderBackground from "@/components/PickerUi/PickerUiRender/PickerUiRenderBackground.vue";
 
 import PickerUiSliderColorRoot from "@/components/PickerUi/PickerUiSliderColor/PickerUiSliderColorRoot.vue";
 import PickerUiSliderColorThumb from "@/components/PickerUi/PickerUiSliderColor/PickerUiSliderColorThumb.vue";
@@ -50,7 +49,6 @@ export const Default: Story = {
       PickerUiSliderMainThumb,
       PickerUiSliderMainRoot,
       PickerUiRenderRoot,
-      PickerUiRenderBackground,
       PickerUiSliderColorRoot,
       PickerUiSliderColorThumb,
       PickerUiSliderAlphaRoot,
@@ -78,9 +76,7 @@ export const Default: Story = {
       </PickerUiSliderMainRoot>
         <div class="flex gap-x-2">
           <div class="flex gap-x-2">
-            <PickerUiRenderRoot class="min-h-10 min-w-10 rounded-full">
-              <PickerUiRenderBackground />
-            </PickerUiRenderRoot>
+            <PickerUiRenderRoot class="min-h-10 min-w-10 rounded-full" />
             <PickerUiEyeDropperRoot>
               <PickerUiEyeDropperTrigger class="h-10 w-full px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
                 Y
@@ -140,7 +136,6 @@ export const Default: Story = {
         <div>
          <div>format: {{args.colorFormat}}</div>
           <div>modelValue: {{modelValue}}</div>
-          
         </div>
       </div>
     </div>`

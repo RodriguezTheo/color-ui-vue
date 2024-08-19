@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import PickerUiRoot from "@/components/PickerUi/PickerUiRoot/PickerUiRoot.vue";
 import PickerUiRenderRoot from "@/components/PickerUi/PickerUiRender/PickerUiRenderRoot.vue";
-import PickerUiRenderBackground from "@/components/PickerUi/PickerUiRender/PickerUiRenderBackground.vue";
 import { ref } from "vue";
 
 const meta = {
@@ -37,13 +36,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: (args) => ({
-    components: { PickerUiRenderRoot, PickerUiRenderBackground },
+    components: { PickerUiRenderRoot },
     setup: () => {
       return { args };
     },
-    template: `<PickerUiRenderRoot class="h-10 w-10" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground">
-             <PickerUiRenderBackground />
-           </PickerUiRenderRoot>`
+    template: `<PickerUiRenderRoot class="h-10 w-10" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground" />`
   })
 };
 
@@ -53,14 +50,12 @@ export const AsChild: Story = {
     asChild: true
   },
   render: (args) => ({
-    components: { PickerUiRenderRoot, PickerUiRenderBackground },
+    components: { PickerUiRenderRoot },
     setup: () => {
       return { args };
     },
     template: `<PickerUiRenderRoot class="h-10 w-10 block" :as="args.as" :as-child="args.asChild" :hide-background="args.hideBackground">
-              <span>
-             <PickerUiRenderBackground />
-              </span>
+              <span />
            </PickerUiRenderRoot>`
   })
 };

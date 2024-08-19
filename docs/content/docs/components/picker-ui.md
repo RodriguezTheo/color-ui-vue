@@ -38,7 +38,6 @@ import {
   PickerUiSliderMainRoot,
   PickerUiSliderMainThumb,
   PickerUiRenderRoot,
-  PickerUiRenderBackground,
   PickerUiSliderColorRoot,
   PickerUiSliderColorThumb,
   PickerUiSliderAlphaRoot,
@@ -54,9 +53,7 @@ import {
       <PickerUiSliderMainThumb />
     </PickerUiSliderMainRoot>
 
-    <PickerUiRenderRoot>
-      <PickerUiRenderBackground />
-    </PickerUiRenderRoot>
+    <PickerUiRenderRoot />
 
     <PickerUiEyeDropperRoot>
       <PickerUiEyeDropperTrigger />
@@ -122,9 +119,7 @@ No props needed, need to be placed inside the `SliderMainRoot`.
 Used to render the color.
 
 ```vue
-<PickerUiRenderRoot>
-  <PickerUiRenderBackground />
-</PickerUiRenderRoot>
+<PickerUiRenderRoot />
 ```
 
 #### Root
@@ -132,12 +127,6 @@ Used to render the color.
 The base of the render.
 
 <!-- @include: ../meta/RenderRoot.md -->
-
-#### Background
-
-The background of the render.
-
-<!-- @include: ../meta/RenderBackground.md -->
 
 ### Eye Dropper
 
