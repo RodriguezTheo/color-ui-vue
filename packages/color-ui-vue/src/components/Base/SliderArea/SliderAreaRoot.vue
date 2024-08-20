@@ -31,6 +31,7 @@ export interface SliderAreaRootProvider {
     onArrowKeyDown: (e: KeyboardEvent) => void;
     onArrowKeyUp: () => void;
   };
+  thumbElement: Ref<HTMLElement | null>;
 }
 </script>
 
@@ -38,9 +39,7 @@ export interface SliderAreaRootProvider {
 import { computed, onBeforeUnmount, onMounted, ref, toRefs } from "vue";
 import { provideSliderAreaRootContext } from "@/components/Base/SliderArea/context";
 import { useMouseInElement } from "@vueuse/core";
-
-const PAGE_KEYS = ["PageUp", "PageDown"];
-const ARROW_KEYS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+import { ARROW_KEYS, PAGE_KEYS } from "@/components/Base/SliderArea/utils";
 
 const props = withDefaults(defineProps<SliderAreaRootProps>(), {
   max: () => [100, 100],
@@ -59,6 +58,7 @@ const vModel = defineModel<[number, number]>("modelValue", {
 const position = ref<[number, number]>([0, 0]);
 
 const containerRef = ref<HTMLElement | null>(null);
+const thumbElement = ref<HTMLElement | null>(null);
 const isSliding = ref(false);
 
 const { elementX, elementY, elementHeight, elementWidth } = useMouseInElement(containerRef);
@@ -146,12 +146,17 @@ const events = () => {
       return;
     }
 
+    e.preventDefault();
+
     if (e instanceof MouseEvent) {
-      e.preventDefault();
+      window.addEventListener("mousemove", onMove);
+      window.addEventListener("mouseup", onUp);
     }
 
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
+    if (e instanceof TouchEvent) {
+      window.addEventListener("touchmove", onMove, { passive: false });
+      window.addEventListener("touchend", onUp);
+    }
 
     const x = elementX.value;
     const y = elementY.value;
@@ -162,10 +167,12 @@ const events = () => {
     }
   };
 
-  const onMove = () => {
+  const onMove = (e: MouseEvent | TouchEvent) => {
     if (!containerRef.value) {
       return;
     }
+
+    e.preventDefault();
 
     const getXPos = () => {
       if (elementX.value < 0) {
@@ -191,6 +198,9 @@ const events = () => {
   };
 
   const cleanUp = () => {
+    window.removeEventListener("touchmove", onMove);
+    window.removeEventListener("touchend", onUp);
+
     window.removeEventListener("mousemove", onMove);
     window.removeEventListener("mouseup", onUp);
   };
@@ -211,23 +221,23 @@ const events = () => {
     const { width, height } = containerRef.value.getBoundingClientRect();
 
     if (e.key === "ArrowUp") {
-      keyPos[1] = Math.max(0, keyPos[1] - (e.ctrlKey ? 10 : 1));
+      keyPos[1] = Math.max(0, keyPos[1] - (e.shiftKey ? 10 : 1));
     } else if (e.key === "ArrowDown") {
-      keyPos[1] = Math.min(height, keyPos[1] + (e.ctrlKey ? 10 : 1));
+      keyPos[1] = Math.min(height, keyPos[1] + (e.shiftKey ? 10 : 1));
     } else if (e.key === "ArrowLeft") {
-      keyPos[0] = Math.max(0, keyPos[0] - (e.ctrlKey ? 10 : 1));
+      keyPos[0] = Math.max(0, keyPos[0] - (e.shiftKey ? 10 : 1));
     } else if (e.key === "ArrowRight") {
-      keyPos[0] = Math.min(width, keyPos[0] + (e.ctrlKey ? 10 : 1));
+      keyPos[0] = Math.min(width, keyPos[0] + (e.shiftKey ? 10 : 1));
     } else if (e.key === "Home") {
-      e.altKey ? (keyPos[1] = 0) : (keyPos[0] = 0);
+      e.shiftKey ? (keyPos[1] = 0) : (keyPos[0] = 0);
     } else if (e.key === "End") {
-      e.altKey ? (keyPos[1] = height) : (keyPos[0] = width);
+      e.shiftKey ? (keyPos[1] = height) : (keyPos[0] = width);
     } else if (e.key === "PageUp") {
-      e.altKey
+      e.shiftKey
         ? (keyPos[0] = Math.max(0, keyPos[0] - 10))
         : (keyPos[1] = Math.max(0, keyPos[1] - 10));
     } else if (e.key === "PageDown") {
-      e.altKey
+      e.shiftKey
         ? (keyPos[0] = Math.min(width, keyPos[0] + 10))
         : (keyPos[1] = Math.min(height, keyPos[1] + 10));
     }
@@ -254,7 +264,8 @@ provideSliderAreaRootContext({
   disabled,
   max,
   min,
-  events
+  events,
+  thumbElement
 });
 
 onMounted(() => {
@@ -295,7 +306,28 @@ onBeforeUnmount(() => {
       }
     "
     @mousedown="events().onDown"
-    @touchdown="events().onDown"
+    @mousemove="
+      (e) => {
+        e.preventDefault();
+      }
+    "
+    @touchmove="
+      (e) => {
+        e.preventDefault();
+        if (thumbElement) {
+          thumbElement.focus();
+          events().onDown(e);
+        }
+      }
+    "
+    @touchdown="
+      (event: TouchEvent) => {
+        if (thumbElement) {
+          thumbElement.focus();
+        }
+        events().onDown(event);
+      }
+    "
   >
     <slot />
   </div>

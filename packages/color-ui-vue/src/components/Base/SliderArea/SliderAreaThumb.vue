@@ -10,6 +10,7 @@ const { onDown, onUp, onArrowKeyDown, onArrowKeyUp } = rootContext.events();
 <template>
   <span
     role="slider"
+    :ref="rootContext.thumbElement"
     :aria-disabled="rootContext.disabled.value"
     :data-disabled="rootContext.disabled.value"
     :aria-valuemin="rootContext.min.value.toString()"

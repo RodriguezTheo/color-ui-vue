@@ -1,6 +1,6 @@
 {
   "name": "color-ui-vue",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Vue color ui components based on Radix-vue",
   "type": "module",
   "license": "MIT",
