@@ -76,6 +76,11 @@ import {
       </PickerUiModeContent>
       <PickerUiModeTrigger />
     </PickerUiModeRoot>
+    <PickerUiHistoryRoot>
+      <PickerUiHistoryList>
+        <PickerUiHistoryListItem />
+      </PickerUiHistoryList>
+    </PickerUiHistoryRoot>
   </PickerUiRoot>
 </template>
 ```
@@ -312,3 +317,33 @@ The label of the mode item.
 The input of the mode item.
 
 <!-- @include: ../meta/ModeItemInput.md -->
+
+### History
+
+The history of the selected colors.
+
+```vue
+<PickerUiHistoryRoot>
+  <PickerUiHistoryList>
+    <PickerUiHistoryListItem />
+  </PickerUiHistoryList>
+</PickerUiHistoryRoot>
+```
+
+#### Root
+
+The base of the history.
+
+<!-- @include: ../meta/HistoryRoot.md -->
+
+#### List
+
+The content for history.
+
+<!-- @include: ../meta/HistoryList.md -->
+
+#### List Item
+
+The item for history.
+
+<!-- @include: ../meta/HistoryListItem.md -->

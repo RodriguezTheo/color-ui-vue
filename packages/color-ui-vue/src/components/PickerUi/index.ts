@@ -5,3 +5,4 @@ export * from "./PickerUiSliderColor";
 export * from "./PickerUiSliderAlpha";
 export * from "./PickerUiMode";
 export * from "./PickerUiEyeDropper";
+export * from "./PickerUiHistory";

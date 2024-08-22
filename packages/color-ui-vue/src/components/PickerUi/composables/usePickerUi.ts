@@ -19,6 +19,7 @@ import { interpolateColors } from "@/components/PickerUi/utils/interpolateColors
 import { colorStops, positionInSlider } from "@/components/PickerUi/utils";
 import { arrayColorToObjectColor, useFormatColor } from "@/shared/useConvertColor";
 import { useId } from "@/shared";
+import { useHistory } from "@/shared/useHistory";
 
 export default (
   modelValue: ModelRef<ColorSelected | undefined>,
@@ -35,7 +36,11 @@ export default (
         : { r: 255, g: 0, b: 0 },
     allowedAlpha: false,
     colorFormat: "rgb",
-    acceptedMode: ["rgb", "hsl", "hex"]
+    acceptedMode: ["rgb", "hsl", "hex"],
+    history: {
+      localStorage: true,
+      limit: 8
+    }
   };
 
   const mergedOptions = computed(() => {
@@ -89,6 +94,9 @@ export default (
     updateInputsAll();
     positionToSelectedColor();
   };
+
+  // History
+  const { histories, history } = useHistory(mergedOptions.value.history);
 
   const updateEyeDropper = (value: string) => {
     colorSelected.value = useFormatColor(value, "hex", "rgb");
@@ -324,6 +332,13 @@ export default (
     }
   });
 
+  const setColor = (color: RGBA) => {
+    colorSelected.value = [color.r, color.g, color.b];
+    updateInputs(mergedOptions.value.allowedAlpha ? color.a : 1, "a");
+    updateInputsAll();
+    positionToSelectedColor();
+  };
+
   return {
     // SLIDERS
     alpha,
@@ -342,6 +357,11 @@ export default (
     mode,
     // EYE DROPPER
     updateEyeDropper,
-    id
+    id,
+    // History
+    histories,
+    history,
+    // GLOBAL
+    setColor
   };
 };

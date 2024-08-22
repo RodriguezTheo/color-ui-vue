@@ -17,6 +17,11 @@ import PickerUiSliderAlphaThumb from "@/components/PickerUi/PickerUiSliderAlpha/
 
 import PickerUiEyeDropperRoot from "@/components/PickerUi/PickerUiEyeDropper/PickerUiEyeDropperRoot.vue";
 import PickerUiEyeDropperTrigger from "@/components/PickerUi/PickerUiEyeDropper/PickerUiEyeDropperTrigger.vue";
+
+import PickerUiHistoryRoot from "@/components/PickerUi/PickerUiHistory/PickerUiHistoryRoot.vue";
+import PickerUiHistoryList from "@/components/PickerUi/PickerUiHistory/PickerUiHistoryList.vue";
+import PickerUiHistoryListItem from "@/components/PickerUi/PickerUiHistory/PickerUiHistoryListItem.vue";
+
 import { ref } from "vue";
 
 const meta = {
@@ -28,14 +33,18 @@ const meta = {
     modelValue: { control: false },
     acceptedMode: { control: "object" },
     allowedAlpha: { control: "boolean" },
-    colorFormat: { control: "select", options: ["hex", "rgb", "hsl"] }
+    colorFormat: { control: "select", options: ["hex", "rgb", "hsl"] },
+    history: { control: "object" }
   },
   args: {
-    modelValue: { r: 240, g: 98, b: 146 },
+    modelValue: { r: 240, g: 98, b: 146, a: 0.5 },
     dir: "ltr",
     acceptedMode: ["hex", "rgb", "hsl"],
-    allowedAlpha: false,
-    colorFormat: "hex"
+    allowedAlpha: true,
+    colorFormat: "rgb",
+    history: {
+      limit: 7
+    }
   }
 } satisfies Meta<typeof PickerUiRoot>;
 
@@ -60,7 +69,10 @@ export const Default: Story = {
       PickerUiModeItemLabel,
       PickerUiModeItemInput,
       PickerUiEyeDropperRoot,
-      PickerUiEyeDropperTrigger
+      PickerUiEyeDropperTrigger,
+      PickerUiHistoryRoot,
+      PickerUiHistoryList,
+      PickerUiHistoryListItem
     },
     setup: () => {
       const modelValue = ref(args.modelValue);
@@ -128,6 +140,11 @@ export const Default: Story = {
           <PickerUiModeTrigger v-slot="{mode}" class="mt-2 h-10 w-full px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
             {{mode}}
           </PickerUiModeTrigger>
+          <PickerUiHistoryRoot>
+            <PickerUiHistoryList class="flex justify-between gap-x-2 mt-2">
+              <PickerUiHistoryListItem class="h-8 w-8 rounded-md" />
+            </PickerUiHistoryList>
+          </PickerUiHistoryRoot>
         </PickerUiModeRoot>
     </PickerUiRoot>
       </div>

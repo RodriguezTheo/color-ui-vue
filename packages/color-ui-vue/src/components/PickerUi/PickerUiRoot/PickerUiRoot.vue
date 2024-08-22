@@ -6,7 +6,8 @@ import type {
   Direction,
   InputColor,
   ModeInput,
-  Positions
+  Positions,
+  RGBA
 } from "@/shared/types";
 import type { Ref } from "vue";
 
@@ -33,6 +34,19 @@ export type PickerUiRootProps = {
    * @defaultValue { r: 255, g: 0, b: 0 }
    */
   defaultValue?: ColorSelected;
+  /**
+   * The history options
+   * @defaultValue {
+   *  enabledLocalStorage: true,
+   *  limit: 8,
+   *  defaultHistory: [{ color: number[], alpha: number }]
+   *  }
+   */
+  history?: {
+    enabledLocalStorage?: boolean;
+    limit?: number;
+    defaultHistory?: { color: number[]; alpha: number }[];
+  };
 };
 
 export type PickerUiRootProvider = {
@@ -54,6 +68,14 @@ export type PickerUiRootProvider = {
   updateInputs: (value: string | number, mode: ModeInput) => void;
   colorFormat: Ref<ColorFormat>;
   updateEyeDropper: (value: string) => void;
+  setColor: (color: RGBA) => void;
+  histories: Ref<{ color: number[]; alpha: number }[]>;
+  history: () => {
+    remove: (props: { color: number[]; alpha: number }) => void;
+    create: (props: { color: number[]; alpha: number }) => void;
+    clear: () => void;
+    init: () => void;
+  };
 };
 </script>
 <script setup lang="ts">
@@ -72,13 +94,14 @@ const props = withDefaults(defineProps<PickerUiRootProps>(), {
 
 const vModel = defineModel<ColorSelected>();
 
-const { allowedAlpha, acceptedMode, colorFormat, dir } = toRefs(props);
+const { allowedAlpha, acceptedMode, colorFormat, dir, history: historyOptions } = toRefs(props);
 
 const options = computed(() => {
   return {
     allowedAlpha: allowedAlpha.value,
     colorFormat: colorFormat.value,
-    acceptedMode: acceptedMode.value
+    acceptedMode: acceptedMode.value,
+    history: historyOptions.value
   };
 });
 
@@ -96,7 +119,10 @@ const {
   updateInputs,
   updateEyeDropper,
   mode,
-  id
+  id,
+  setColor,
+  histories,
+  history
 } = usePickerUi(vModel, options, props.defaultValue);
 
 providePickerUiRootContext({
@@ -117,7 +143,10 @@ providePickerUiRootContext({
   inputs,
   updateInputs,
   colorFormat,
-  updateEyeDropper
+  updateEyeDropper,
+  setColor,
+  history,
+  histories
 });
 
 onMounted(() => {
