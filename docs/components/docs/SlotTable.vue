@@ -15,7 +15,7 @@ const props = defineProps<PropsTableProps>();
 
 <template>
   <div class="-mx-6 md:mx-0 overflow-x-auto mb-12 mt-5 relative rounded-lg">
-    <table class="w-full !table border-b border-border border-x my-0 rounded-lg">
+    <table class="w-full !table border-b border-[var(--vp-c-divider)] border-x !my-0">
       <thead class="rounded-lg">
         <tr class="rounded-md overflow-hidden dark:!bg-[var(--vp-code-block-bg)] *:my-0">
           <th class="h-10 pb-1 [&:not(:first-child)]:pl-4 text-left w-1/3">
