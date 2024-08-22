@@ -43,7 +43,8 @@ const gradientPos = computed(() => {
     @update:model-value="rootContext.updateAlpha()"
     :style="[
       !hideBackground &&
-        `background-size: 10px 10px;
+        `background-size: 8px 8px;
+        background-color: rgb(255, 255, 255);
         background-image: conic-gradient(
         rgb(238, 238, 238) 0deg,
         rgb(238, 238, 238) 25%,

@@ -21,7 +21,8 @@ const { color, alpha } = toRefs(props);
 
 const backgroundColor = computed(() => {
   if (!props.hideBackground) {
-    return `background-size: 10px 10px;
+    return `background-size: 8px 8px;
+          background-color: rgb(255, 255, 255);
           background-image:
             linear-gradient(to top, rgba(${color.value[0]}, ${color.value[1]}, ${color.value[2]}, ${alpha.value}), rgba(${color.value[0]}, ${color.value[1]}, ${color.value[2]}, ${alpha.value})),
             conic-gradient(
