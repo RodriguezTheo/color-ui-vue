@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Pipette } from "lucide-vue-next";
 import {
   PickerUiEyeDropperRoot,
   PickerUiEyeDropperTrigger,
@@ -16,22 +17,27 @@ import {
   PickerUiSliderColorThumb,
   PickerUiSliderMainRoot,
   PickerUiSliderMainThumb,
+  PickerUiHistoryRoot,
+  PickerUiHistoryListItem,
+  PickerUiHistoryList,
   type ModeInput
 } from "color-ui-vue";
 import { ref } from "vue";
 
-const color = ref({ r: 100, g: 100, b: 100 });
+const color = ref({ r: 100, g: 100, b: 100, a: 0.5 });
 </script>
 
 <template>
-  <PickerUiRoot v-model="color">
+  <PickerUiRoot v-model="color" allowed-alpha>
     <PickerUiSliderMainRoot class="SliderArea">
       <PickerUiSliderMainThumb class="SliderAreaThumb" />
     </PickerUiSliderMainRoot>
     <div class="PickerUiContent">
       <PickerUiRenderRoot class="RenderRoot" />
       <PickerUiEyeDropperRoot>
-        <PickerUiEyeDropperTrigger class="EyeDropperTrigger">Y</PickerUiEyeDropperTrigger>
+        <PickerUiEyeDropperTrigger class="EyeDropperTrigger">
+          <Pipette class="w-4 h-4" />
+        </PickerUiEyeDropperTrigger>
       </PickerUiEyeDropperRoot>
       <div class="SliderContainer">
         <PickerUiSliderColorRoot class="SliderRoot">
@@ -80,5 +86,10 @@ const color = ref({ r: 100, g: 100, b: 100 });
         {{ mode }}
       </PickerUiModeTrigger>
     </PickerUiModeRoot>
+    <PickerUiHistoryRoot>
+      <PickerUiHistoryList class="HistoryList">
+        <PickerUiHistoryListItem class="HistoryListItem" />
+      </PickerUiHistoryList>
+    </PickerUiHistoryRoot>
   </PickerUiRoot>
 </template>

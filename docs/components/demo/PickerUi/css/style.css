@@ -222,3 +222,16 @@
   column-gap: 0.5rem;
   width: 100%;
 }
+
+.HistoryList {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.HistoryListItem {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 0.25rem;
+}

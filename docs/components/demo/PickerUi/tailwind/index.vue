@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { Pipette } from "lucide-vue-next";
 import {
+  type ModeInput,
   PickerUiEyeDropperRoot,
   PickerUiEyeDropperTrigger,
   PickerUiModeContent,
@@ -15,7 +17,10 @@ import {
   PickerUiSliderColorRoot,
   PickerUiSliderColorThumb,
   PickerUiSliderMainRoot,
-  PickerUiSliderMainThumb
+  PickerUiSliderMainThumb,
+  PickerUiHistoryRoot,
+  PickerUiHistoryList,
+  PickerUiHistoryListItem
 } from "color-ui-vue";
 import { ref } from "vue";
 
@@ -24,7 +29,7 @@ const color = ref({ r: 100, g: 100, b: 100 });
 
 <template>
   <div class="flex flex-col w-80 gap-y-2 px-4 py-4 rounded-lg border bg-background">
-    <PickerUiRoot v-model="color">
+    <PickerUiRoot v-model="color" allowed-alpha :history="{ limit: 7 }">
       <PickerUiSliderMainRoot class="group outline-none h-40 w-full mb-4 rounded-md">
         <PickerUiSliderMainThumb
           class="block h-4 w-4 rounded-full cursor-pointer data-[disabled=true]:cursor-not-allowed border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
@@ -37,7 +42,7 @@ const color = ref({ r: 100, g: 100, b: 100 });
             <PickerUiEyeDropperTrigger
               class="h-10 w-full px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground"
             >
-              Y
+              <Pipette class="w-4 h-4" />
             </PickerUiEyeDropperTrigger>
           </PickerUiEyeDropperRoot>
         </div>
@@ -60,7 +65,7 @@ const color = ref({ r: 100, g: 100, b: 100 });
       </div>
       <PickerUiModeRoot class="flex flex-col">
         <PickerUiModeContent
-          v-for="mode in ['rgb', 'hsl']"
+          v-for="mode in ['rgb', 'hsl'] as const"
           :value="mode"
           :key="'mode-' + mode"
           class="flex gap-x-2 w-full"
@@ -69,7 +74,7 @@ const color = ref({ r: 100, g: 100, b: 100 });
           <PickerUiModeItem
             v-for="item in value"
             :key="'rgb-' + item"
-            :value="item"
+            :value="item as ModeInput"
             class="flex flex-col text-center"
           >
             <PickerUiModeItemLabel>{{ item.toUpperCase() }}</PickerUiModeItemLabel>
@@ -105,6 +110,11 @@ const color = ref({ r: 100, g: 100, b: 100 });
           {{ mode }}
         </PickerUiModeTrigger>
       </PickerUiModeRoot>
+      <PickerUiHistoryRoot>
+        <PickerUiHistoryList class="flex justify-between gap-x-2 mt-2">
+          <PickerUiHistoryListItem class="h-8 w-8 rounded-md" />
+        </PickerUiHistoryList>
+      </PickerUiHistoryRoot>
     </PickerUiRoot>
   </div>
 </template>
