@@ -38,7 +38,7 @@ export default (
     colorFormat: "rgb",
     acceptedMode: ["rgb", "hsl", "hex"],
     history: {
-      localStorage: true,
+      enabledLocalStorage: true,
       limit: 8
     }
   };
