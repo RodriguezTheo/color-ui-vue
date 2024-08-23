@@ -35,18 +35,15 @@ export type PickerUiRootProps = {
    */
   defaultValue?: ColorSelected;
   /**
-   * The history options
-   * @defaultValue {
-   *  enabledLocalStorage: true,
-   *  limit: 8,
-   *  defaultHistory: [{ color: number[], alpha: number }]
-   *  }
+   * Options
+   * @defaultValue {historyLimit: 8, defaultHistory: [{ color: number[], alpha: number }]}
    */
-  history?: {
-    enabledLocalStorage?: boolean;
-    limit?: number;
-    defaultHistory?: { color: number[]; alpha: number }[];
+  options: {
+    historyLimit?: number;
+    historyDefault?: { color: number[]; alpha: number }[];
   };
+  histories?: { color: number[]; alpha: number }[];
+  modelValue?: ColorSelected;
 };
 
 export type PickerUiRootProvider = {
@@ -79,7 +76,7 @@ export type PickerUiRootProvider = {
 };
 </script>
 <script setup lang="ts">
-import { computed, onMounted, toRefs } from "vue";
+import { computed, onMounted, toRefs, watch } from "vue";
 import { providePickerUiRootContext } from "@/components/PickerUi/PickerUiRoot/context";
 import usePickerUi from "@/components/PickerUi/composables/usePickerUi";
 
@@ -93,15 +90,16 @@ const props = withDefaults(defineProps<PickerUiRootProps>(), {
 });
 
 const vModel = defineModel<ColorSelected>();
+const vHistories = defineModel<{ color: number[]; alpha: number }[]>("histories");
 
-const { allowedAlpha, acceptedMode, colorFormat, dir, history: historyOptions } = toRefs(props);
+const { allowedAlpha, acceptedMode, colorFormat, dir, options } = toRefs(props);
 
-const options = computed(() => {
+const opt = computed(() => {
   return {
     allowedAlpha: allowedAlpha.value,
     colorFormat: colorFormat.value,
     acceptedMode: acceptedMode.value,
-    history: historyOptions.value
+    ...options.value
   };
 });
 
@@ -123,7 +121,7 @@ const {
   setColor,
   histories,
   history
-} = usePickerUi(vModel, options, props.defaultValue);
+} = usePickerUi(vModel, vHistories, opt, props.defaultValue);
 
 providePickerUiRootContext({
   dir,
@@ -147,6 +145,10 @@ providePickerUiRootContext({
   setColor,
   history,
   histories
+});
+
+watch(histories, () => {
+  vHistories.value = histories.value;
 });
 
 onMounted(() => {

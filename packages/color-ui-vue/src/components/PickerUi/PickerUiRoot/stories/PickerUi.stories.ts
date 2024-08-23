@@ -33,8 +33,7 @@ const meta = {
     modelValue: { control: false },
     acceptedMode: { control: "object" },
     allowedAlpha: { control: "boolean" },
-    colorFormat: { control: "select", options: ["hex", "rgb", "hsl"] },
-    history: { control: "object" }
+    colorFormat: { control: "select", options: ["hex", "rgb", "hsl"] }
   },
   args: {
     modelValue: { r: 240, g: 98, b: 146, a: 0.5 },
@@ -42,8 +41,13 @@ const meta = {
     acceptedMode: ["hex", "rgb", "hsl"],
     allowedAlpha: true,
     colorFormat: "rgb",
-    history: {
-      limit: 7
+    histories: [],
+    options: {
+      historyLimit: 7,
+      historyDefault: [
+        { color: [0, 135, 129], alpha: 1 },
+        { color: [5, 160, 69], alpha: 1 }
+      ]
     }
   }
 } satisfies Meta<typeof PickerUiRoot>;
@@ -76,11 +80,12 @@ export const Default: Story = {
     },
     setup: () => {
       const modelValue = ref(args.modelValue);
-      return { args, modelValue };
+      const histories = ref(args.histories);
+      return { args, modelValue, histories };
     },
     template: `<div class="flex gap-x-16">
       <div class="flex flex-col w-80 gap-y-2 px-4 py-4 rounded border">
-      <PickerUiRoot v-bind="args" v-model="modelValue">
+      <PickerUiRoot v-bind="args" v-model="modelValue" v-model:histories="histories">
       <PickerUiSliderMainRoot class="group outline-none h-40 w-full mb-4 rounded-md">
         <PickerUiSliderMainThumb
           class="block h-4 w-4 rounded-full cursor-pointer data-[disabled=true]:cursor-not-allowed border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
@@ -153,6 +158,7 @@ export const Default: Story = {
         <div>
          <div>format: {{args.colorFormat}}</div>
           <div>modelValue: {{modelValue}}</div>
+          <div>histories: {{histories}}</div>
         </div>
       </div>
     </div>`

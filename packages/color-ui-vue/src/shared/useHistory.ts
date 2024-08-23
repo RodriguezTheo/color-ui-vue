@@ -1,7 +1,5 @@
 import { computed, ref } from "vue";
-import { LOCAL_KEY } from "@/constant/localStorageKey";
 import { useFormatColor } from "@/shared/useConvertColor";
-import { useStorage } from "@vueuse/core";
 
 const HISTORY_LIMIT = 8;
 
@@ -55,28 +53,23 @@ const state = ref<State>({
   histories: []
 });
 
-const localHistory = useStorage(
-  LOCAL_KEY,
-  {
-    histories: defaultPalette
-  },
-  localStorage,
-  { mergeDefaults: true }
-);
-
 type DispatchOptions = {
   limit: number;
-  enabledLocalStorage: boolean;
   defaultHistory: HistoryItem[];
+  allowedAlpha: boolean;
 };
 
 const formatColor = (color: number[], alpha: number) => {
   return useFormatColor({ r: color[0], g: color[1], b: color[2], a: alpha }, "rgba", "hexa");
 };
 
-const removeDuplicateHistory = (histories: HistoryItem[], colorToFind: string | null) => {
+const removeDuplicateHistory = (
+  histories: HistoryItem[],
+  colorToFind: string | null,
+  allowedAlpha: boolean
+) => {
   const duplicatedIndex = histories.findIndex((h) => {
-    const color = formatColor(h.color, h.alpha);
+    const color = formatColor(h.color, allowedAlpha ? h.alpha : 1);
     return color === colorToFind;
   });
   if (duplicatedIndex !== -1) {
@@ -85,97 +78,83 @@ const removeDuplicateHistory = (histories: HistoryItem[], colorToFind: string | 
   return histories;
 };
 
-const addHistory = (history: HistoryItem, limit: number) => {
-  const colorToFind = formatColor(history.color, history.alpha);
+const addHistory = (history: HistoryItem, limit: number, allowedAlpha: boolean) => {
+  const colorToFind = formatColor(history.color, allowedAlpha ? history.alpha : 1);
   let newHistory = [...state.value.histories];
-  newHistory = removeDuplicateHistory(newHistory, colorToFind);
+  newHistory = removeDuplicateHistory(newHistory, colorToFind, allowedAlpha);
   state.value.histories = [history, ...newHistory].slice(0, limit);
 };
 
-const updateLocalHistory = (
-  histories: HistoryItem[],
-  enabledLocalStorage: boolean,
-  limit: number
-) => {
-  if (enabledLocalStorage) {
-    localHistory.value.histories = histories.slice(0, limit);
-  }
-};
-
-const initializeHistory = (
-  defaultHistory: HistoryItem[],
-  enabledLocalStorage: boolean,
-  limit: number
-) => {
-  if (enabledLocalStorage) {
-    const data = localHistory.value.histories;
-    localHistory.value.histories = data.slice(0, limit);
-    state.value.histories = localHistory.value.histories;
-  } else {
-    state.value.histories = defaultHistory.slice(0, limit);
-  }
+const initializeHistory = (defaultHistory: HistoryItem[], limit: number) => {
+  state.value.histories = defaultHistory.slice(0, limit);
 };
 
 function dispatch(action: Action, options?: Partial<DispatchOptions>) {
   const defaultOptions: DispatchOptions = {
     limit: HISTORY_LIMIT,
-    enabledLocalStorage: true,
-    defaultHistory: defaultPalette
+    defaultHistory: defaultPalette,
+    allowedAlpha: false
   };
 
   const opts = { ...defaultOptions, ...options };
-  const { limit, enabledLocalStorage, defaultHistory } = opts;
+  const { limit, defaultHistory, allowedAlpha } = opts;
 
   switch (action.type) {
     case actionTypes.ADD_HISTORY:
-      addHistory(action.history, limit);
-      if (enabledLocalStorage) {
-        localHistory.value.histories = state.value.histories;
-      }
+      addHistory(action.history, limit, allowedAlpha);
       break;
 
     case actionTypes.REMOVE_HISTORY:
       state.value.histories = removeDuplicateHistory(
         state.value.histories,
-        formatColor(action.history.color, action.history.alpha)
+        formatColor(action.history.color, allowedAlpha ? action.history.alpha : 1),
+        allowedAlpha
       );
-      if (enabledLocalStorage) {
-        localHistory.value.histories = state.value.histories;
-      }
       break;
 
     case actionTypes.CLEAR_HISTORY:
       state.value.histories = [];
-      updateLocalHistory([], enabledLocalStorage, limit);
       break;
 
     case actionTypes.INIT_HISTORY:
-      initializeHistory(defaultHistory, enabledLocalStorage, limit);
+      initializeHistory(defaultHistory, limit);
       break;
   }
 }
 
-function useHistory(options?: Partial<DispatchOptions>) {
-  function history() {
-    const init = () => dispatch({ type: actionTypes.INIT_HISTORY }, options);
-    const remove = (props: HistoryItem) =>
-      dispatch({ type: actionTypes.REMOVE_HISTORY, history: props }, options);
-    const clear = () => dispatch({ type: actionTypes.CLEAR_HISTORY }, options);
-    const create = (props: HistoryItem) =>
-      dispatch({ type: actionTypes.ADD_HISTORY, history: props }, options);
+function history(
+  options?: Partial<DispatchOptions>,
+  cb?: (value: { color: number[]; alpha: number }[]) => void
+) {
+  const init = () => dispatch({ type: actionTypes.INIT_HISTORY }, options);
+  const remove = (props: HistoryItem) =>
+    dispatch({ type: actionTypes.REMOVE_HISTORY, history: props }, options);
+  const clear = () => dispatch({ type: actionTypes.CLEAR_HISTORY }, options);
+  const create = (props: HistoryItem) =>
+    dispatch({ type: actionTypes.ADD_HISTORY, history: props }, options);
 
-    return {
-      remove,
-      create,
-      clear,
-      init
-    };
-  }
+  cb && cb(state.value.histories);
 
   return {
-    histories: computed(() => state.value.histories),
-    history
+    remove,
+    create,
+    clear,
+    init
   };
 }
 
-export { useHistory, type HistoryItem };
+function useHistory(
+  options?: Partial<DispatchOptions>,
+  onChange?: (value: { color: number[]; alpha: number }[]) => void
+) {
+  const onHistoryChange = (value: { color: number[]; alpha: number }[]) => {
+    onChange && onChange(value);
+  };
+
+  return {
+    histories: computed(() => state.value.histories),
+    history: () => history(options, onHistoryChange)
+  };
+}
+
+export { useHistory, defaultPalette, type HistoryItem };

@@ -49,11 +49,8 @@ export type ColorUiOptions = {
   allowedAlpha?: boolean;
   colorFormat?: ColorFormat;
   acceptedMode?: AcceptedMode[];
-  history?: {
-    enabledLocalStorage?: boolean;
-    limit?: number;
-    defaultHistory?: { color: number[]; alpha: number }[];
-  };
+  historyLimit?: number;
+  historyDefault?: { color: number[]; alpha: number }[];
 };
 
 export type ColorUiOptionsMerged = ColorUiOptions & {
@@ -61,4 +58,5 @@ export type ColorUiOptionsMerged = ColorUiOptions & {
   defaultValue: ColorSelected;
   colorFormat: ColorFormat;
   acceptedMode: AcceptedMode[];
+  historyLimit: number;
 };
