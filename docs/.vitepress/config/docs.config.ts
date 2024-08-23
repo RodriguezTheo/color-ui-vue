@@ -73,7 +73,7 @@ export const metaHead = [
       rel: "preload",
       as: "style",
       onload: "this.onload=null;this.rel='stylesheet'",
-      href: styles.font
+      href: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
     }
   ],
   ["noscript", {}, `<link rel="stylesheet" crossorigin="anonymous" href="${styles.font}" />`],

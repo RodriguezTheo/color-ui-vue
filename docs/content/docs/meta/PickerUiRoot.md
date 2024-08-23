@@ -1,5 +1,19 @@
 <PropsTable :data="[
 {
+'name': 'modelValue',
+'description': '<p>The model value of the color picker. </p><br><p>Check <a href=\'/docs/utilities/use-convert-color.html\'>useConvertColor</a> for type declarations.</p>\n',
+'type': 'RGB | RGBA | HSL | HSLA | HEX | HEXA',
+'required': false,
+'default': '{ r: 255, g: 0, b: 0 }'
+},
+{
+'name': 'histories',
+'description': '<p>The model value histories of the color picker.</p>',
+'type': '{color: number; alpha: number}[]',
+'required': false,
+'default': '{ r: 255, g: 0, b: 0 }'
+},
+{
 'name': 'dir',
 'description': '<p>The reading direction of Color Ui when applicable.<br>If omitted assumes LTR (left-to-right) reading mode.</p>\n',
 'type': 'ltr | rtl',
