@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/RodriguezTheo/color-ui-vue/">
-    <img src="https://res.cloudinary.com/ds42hzeif/image/upload/v1720389675/color-ui-vue/color-ui-vue-logo.svg" alt="Logo" width="150" />
+    <img src="https://color-ui-vue.vercel.app/logo.svg" alt="Logo" width="150" />
   </a>
 
 <h1 align="center">
@@ -21,7 +21,7 @@ Color UI is an unstyled, customisable component with built in accessibility with
  <a href="https://color-ui-vue.vercel.app">Documentation</a> | <a href="https://color-ui-vue.vercel.app/docs/overview/introduction.html">Getting Started</a> | <a href="https://color-ui-vue.vercel.app/docs/components/picker-ui.html">Examples</a>
 </p>
 
-![hero image](https://res.cloudinary.com/ds42hzeif/image/upload/v1720389185/color-ui-vue/heropicture.png)
+![hero image](https://color-ui-vue.vercel.app/hero.png)
 <em>design by: [Rodriguez Théo](https://github.com/RodriguezTheo)</em>
 
 ## Installation
