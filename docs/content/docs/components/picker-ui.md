@@ -109,85 +109,7 @@ The main slider to select the color.
 </PickerUiSliderMainRoot>
 ```
 
-#### Root
-
-The base of the main slider.
-
 <!-- @include: ../meta/SliderMainRoot.md -->
-
-#### Thumb
-
-No props needed, need to be placed inside the `SliderMainRoot`.
-
-#### Keyboard Interactions
-
-<KeyboardTable :data="[
-{
-keys: ['ArrowRight'],
-description: '<span> Increments <code>valueX</code>.</span>',
-},
-{
-keys: ['ArrowLeft'],
-description: '<span> Decrements <code>valueX</code>.</span>',
-},
-{
-keys: ['ArrowUp'],
-description: '<span> Increments <code>valueY</code>.</span>',
-},
-{
-keys: ['ArrowDown'],
-description: '<span> Decrements <code>valueY</code>.</span>',
-},
-{
-keys: ['PageUp'],
-description: '<span> Increases the <code>valueY</code>.</span>',
-},
-{
-keys: ['PageDown'],
-description: '<span> Decreases the <code>valueY</code>.</span>',
-},
-{
-keys: ['Home'],
-description: 'Sets the <code>valueX</code> to its minimum.',
-},
-{
-keys: ['End'],
-description: 'Sets the <code>valueX</code> to its maximum.',
-},
-{
-keys: ['Shift + ArrowRight'],
-description: '<span> Increases <code>valueX</code>. </span>',
-},
-{
-keys: ['Shift + ArrowLeft'],
-description: '<span> Decreases <code>valueX</code>.</span>',
-},
-{
-keys: ['Shift + ArrowUp'],
-description: '<span> Increases <code>valueY</code>. </span>',
-},
-{
-keys: ['Shift + ArrowDown'],
-description: '<span> Decreases <code>valueY</code>.</span>',
-},
-{
-keys: ['Shift + PageUp'],
-description: '<span> Increases the <code>valueX</code>.</span>',
-},
-{
-keys: ['Shift + PageDown'],
-description: '<span> Decreases the <code>valueX</code>.</span>',
-},
-{
-keys: ['Shift + Home'],
-description: 'Sets the <code>valueY</code> to its minimum.',
-},
-{
-keys: ['Shift + End'],
-description: 'Sets the <code>valueY</code> to its maximum.',
-},
-]"
-/>
 
 ### Render
 
@@ -196,10 +118,6 @@ Used to render the color.
 ```vue
 <PickerUiRenderRoot />
 ```
-
-#### Root
-
-The base of the render.
 
 <!-- @include: ../meta/RenderRoot.md -->
 
@@ -213,15 +131,6 @@ Used to pick a color from the screen.
 </PickerUiEyeDropperRoot>
 ```
 
-#### Root
-
-The base of the eye dropper.
-<br>No props needed.
-
-#### Trigger
-
-The trigger to pick the color.
-
 <!-- @include: ../meta/EyeDropperTrigger.md -->
 
 ### Slider Color
@@ -234,16 +143,7 @@ The slider to select the color.
 </PickerUiSliderColorRoot>
 ```
 
-#### Root
-
-The base of the color slider.
-
 <!-- @include: ../meta/SliderColorRoot.md -->
-
-#### Thumb
-
-Need to be placed inside the `SliderColorRoot`.
-<br>No props needed.
 
 ### Slider Alpha
 
@@ -255,16 +155,7 @@ The slider to select the alpha channel.
 </PickerUiSliderAlphaRoot>
 ```
 
-#### Root
-
-The base of the alpha slider.
-
 <!-- @include: ../meta/SliderAlphaRoot.md -->
-
-#### Thumb
-
-Need to be placed inside the `SliderAlphaRoot`.
-<br>No props needed.
 
 ### Mode
 
@@ -282,40 +173,11 @@ The mode to select the color format.
 </PickerUiModeRoot>
 ```
 
-#### Root
-
-The base of the mode.
-
 <!-- @include: ../meta/ModeRoot.md -->
-
-#### Content
-
-The content of the mode.
-
 <!-- @include: ../meta/ModeContent.md -->
-
-#### Trigger
-
-The trigger to open the mode.
-
 <!-- @include: ../meta/ModeTrigger.md -->
-
-#### Item
-
-The item of the mode.
-
 <!-- @include: ../meta/ModeItem.md -->
-
-#### Item Label
-
-The label of the mode item.
-
 <!-- @include: ../meta/ModeItemLabel.md -->
-
-#### Item Input
-
-The input of the mode item.
-
 <!-- @include: ../meta/ModeItemInput.md -->
 
 ### History
@@ -330,20 +192,6 @@ The history of the selected colors.
 </PickerUiHistoryRoot>
 ```
 
-#### Root
-
-The base of the history.
-
 <!-- @include: ../meta/HistoryRoot.md -->
-
-#### List
-
-The content for history.
-
 <!-- @include: ../meta/HistoryList.md -->
-
-#### List Item
-
-The item for history.
-
 <!-- @include: ../meta/HistoryListItem.md -->

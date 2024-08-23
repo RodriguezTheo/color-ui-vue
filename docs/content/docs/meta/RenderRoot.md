@@ -1,3 +1,7 @@
+#### Root
+
+The base of the render.
+
 <PropsTable :data="[
 {
 'name': 'as',

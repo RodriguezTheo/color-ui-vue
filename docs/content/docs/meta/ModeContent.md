@@ -1,3 +1,7 @@
+#### Content
+
+The content of the mode.
+
 <PropsTable :data="[
 {
 'name': 'as',

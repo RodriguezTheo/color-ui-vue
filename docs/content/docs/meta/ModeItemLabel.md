@@ -1,3 +1,7 @@
+#### Item Label
+
+The label of the mode item.
+
 <PropsTable :data="[
 {
 'name': 'as',

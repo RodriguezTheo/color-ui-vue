@@ -24,11 +24,11 @@ import {
 } from "color-ui-vue";
 import { ref } from "vue";
 
-const color = ref({ r: 100, g: 100, b: 100, a: 0.5 });
+const color = ref({ r: 49, g: 168, b: 94, a: 1 });
 </script>
 
 <template>
-  <PickerUiRoot v-model="color" allowed-alpha>
+  <PickerUiRoot v-model="color" allowed-alpha :options="{ historyLimit: 7 }">
     <PickerUiSliderMainRoot class="SliderArea">
       <PickerUiSliderMainThumb class="SliderAreaThumb" />
     </PickerUiSliderMainRoot>

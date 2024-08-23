@@ -24,12 +24,12 @@ import {
 } from "color-ui-vue";
 import { ref } from "vue";
 
-const color = ref({ r: 100, g: 100, b: 100 });
+const color = ref({ r: 49, g: 168, b: 94, a: 1 });
 </script>
 
 <template>
   <div class="flex flex-col w-80 gap-y-2 px-4 py-4 rounded-lg border bg-background">
-    <PickerUiRoot v-model="color" allowed-alpha :history="{ limit: 7 }">
+    <PickerUiRoot v-model="color" allowed-alpha :options="{ historyLimit: 7 }">
       <PickerUiSliderMainRoot class="group outline-none h-40 w-full mb-4 rounded-md">
         <PickerUiSliderMainThumb
           class="block h-4 w-4 rounded-full cursor-pointer data-[disabled=true]:cursor-not-allowed border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"

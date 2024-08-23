@@ -1,3 +1,11 @@
+#### Root
+
+The base of the eye dropper.
+
+#### Trigger
+
+The trigger to pick the color.
+
 <PropsTable :data="[
 {
 'name': 'as',

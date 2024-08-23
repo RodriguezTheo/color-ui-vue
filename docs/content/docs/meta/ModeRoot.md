@@ -1,3 +1,7 @@
+#### Root
+
+The base of the mode.
+
 <PropsTable :data="[
 {
 'name': 'as',

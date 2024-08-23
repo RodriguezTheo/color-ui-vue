@@ -47,5 +47,25 @@
 'type': 'RGB | RGBA | HSL | HSLA | HEX | HEXA',
 'required': false,
 'default': '{ r: 255, g: 0, b: 0 }'
+},
+{
+'name': 'options',
+'description': '<p>Options for different features. </p><br><p><code>historyLimit</code> : limit the number of list item history</p>\n<p><code>historyDefault</code> : default history</p>',
+'type': '{ historyLimit?: number, historyDefault?: { color: number[]; alpha: number }[]}',
+'required': false,
+'default': '{ historyLimit: 8, historyDefault: ...[]}'
+}
+]" />
+
+<EmitsTable :data="[
+{
+'name': 'update:modelValue',
+'description': '<p>Event handler called when the color selected change</p>\n',
+'type': '[value: RGB | RGBA | HSL | HSLA | HEX | HEXA]'
+},
+{
+'name': 'update:histories',
+'description': '<p>Event handler called when the histories change</p>\n',
+'type': '[value: { color: number[]; alpha: number }[]]'
 }
 ]" />

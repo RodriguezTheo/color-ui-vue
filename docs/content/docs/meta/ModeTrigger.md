@@ -1,3 +1,7 @@
+#### Trigger
+
+The trigger to open the mode.
+
 <PropsTable :data="[
 {
 'name': 'as',

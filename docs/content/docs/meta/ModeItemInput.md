@@ -1,3 +1,7 @@
+#### Item Input
+
+The input of the mode item.
+
 <PropsTable :data="[
 {
 'name': 'as',

@@ -1,3 +1,7 @@
+#### Item
+
+The item of the mode.
+
 <PropsTable :data="[
 {
 'name': 'as',

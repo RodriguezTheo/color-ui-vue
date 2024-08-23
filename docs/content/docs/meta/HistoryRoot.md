@@ -1,3 +1,7 @@
+#### Root
+
+The base of the history.
+
 <PropsTable :data="[
 {
 'name': 'disabled',
