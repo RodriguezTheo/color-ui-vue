@@ -2,29 +2,35 @@ import { computed, type ModelRef, onMounted, type Ref, ref, watch } from "vue";
 import type {
   AcceptedMode,
   Color,
+  ColorFormat,
   ColorSelected,
-  ColorUiOptions,
-  ColorUiOptionsMerged,
-  HEX,
-  HEXA,
-  HSL,
-  HSLA,
   InputColor,
   ModeInput,
   Positions,
-  RGB,
   RGBA
 } from "@/shared/types";
-import { interpolateColors } from "@/components/PickerUi/utils/interpolateColors";
-import { colorStops, positionInSlider } from "@/components/PickerUi/utils";
 import { arrayColorToObjectColor, useFormatColor } from "@/shared/useConvertColor";
 import { useId } from "@/shared";
 import { defaultPalette, useHistory } from "@/shared/useHistory";
+import { initializeColor } from "@/shared/initializeColor";
+import usePositionsColors from "@/shared/usePositionsColors";
+import useColors from "@/shared/useColors";
+
+type PickerUiOptionsMerged = {
+  allowedAlpha: boolean;
+  defaultValue: ColorSelected;
+  colorFormat: ColorFormat;
+  acceptedMode: AcceptedMode[];
+  historyLimit: number;
+  historyDefault: { color: number[]; alpha: number }[];
+};
+
+type PickerUiOptions = Partial<PickerUiOptionsMerged>;
 
 export default (
   modelValue: ModelRef<ColorSelected | undefined>,
   historiesValue: ModelRef<{ color: number[]; alpha: number }[] | undefined>,
-  options: Ref<ColorUiOptions>,
+  options: Ref<PickerUiOptions>,
   defaultValue?: ColorSelected
 ) => {
   const id = useId(undefined, "color-ui");
@@ -43,56 +49,18 @@ export default (
   };
 
   const mergedOptions = computed(() => {
-    return { ...defaultOptions, ...options.value } as ColorUiOptionsMerged;
+    return { ...defaultOptions, ...options.value } as PickerUiOptionsMerged;
   });
 
-  const initializeColor = (color: ColorSelected) => {
-    // Define color by the color format
-    if (typeof mergedOptions.value.defaultValue === "object") {
-      const data = color as Omit<Omit<ColorSelected, "HEX">, "HEXA">;
-      if (mergedOptions.value.colorFormat === "rgb") {
-        if ("r" in data && "g" in data && "b" in data) {
-          const { r, g, b } = data as RGB | RGBA;
-          colorSelected.value = [r, g, b];
+  const { colorSelectedToHuePositions, positionsMainToSelectedColor, positionHueToColor } =
+    usePositionsColors();
 
-          if ("a" in data && mergedOptions.value.allowedAlpha) {
-            alpha.value = (data as RGBA).a;
-            positionAlpha.value = alpha.value;
-          }
-        }
-      }
-
-      if (mergedOptions.value.colorFormat === "hsl") {
-        if ("h" in data && "s" in data && "l" in data) {
-          const { h, s, l } = data as HSL | HSLA;
-          colorSelected.value = useFormatColor({ h, s, l }, "hsl", "rgb");
-
-          if ("a" in data && mergedOptions.value.allowedAlpha) {
-            alpha.value = (data as HSLA).a;
-            positionAlpha.value = alpha.value;
-          }
-        }
-      }
-    }
-
-    if (
-      mergedOptions.value.colorFormat === "hex" &&
-      typeof mergedOptions.value.defaultValue === "string"
-    ) {
-      const data = color as HEX | HEXA;
-      const rgba = useFormatColor(data, "hex", "rgba");
-      const [r, g, b, a] = rgba;
-      colorSelected.value = [r, g, b];
-
-      if (mergedOptions.value.allowedAlpha) {
-        alpha.value = a;
-        positionAlpha.value = alpha.value;
-      }
-    }
-
-    updateInputsAll();
-    positionToSelectedColor();
-  };
+  const useColorsOptions = computed(() => {
+    return {
+      colorFormat: mergedOptions.value.colorFormat,
+      allowedAlpha: mergedOptions.value.allowedAlpha
+    };
+  });
 
   // History
   const { histories, history } = useHistory(
@@ -106,10 +74,17 @@ export default (
     }
   );
 
+  const colorSelectedToHuePositionsColors = () =>
+    colorSelectedToHuePositions(colorSelected.value, (value) => {
+      color.value = value.color;
+      positionsMain.value = value.positionsMain;
+      positionColor.value = value.positionColor;
+    });
+
   const updateEyeDropper = (value: string) => {
     colorSelected.value = useFormatColor(value, "hex", "rgb");
     updateInputsAll();
-    positionToSelectedColor();
+    colorSelectedToHuePositionsColors();
   };
 
   // SLIDERS
@@ -127,29 +102,27 @@ export default (
   };
 
   const updateInput = {
-    hex: (color: { r: number; g: number; b: number }) => {
-      const testColor = mergedOptions.value.allowedAlpha
-        ? useFormatColor({ ...color, a: alpha.value }, "rgba", "hexa")
-        : useFormatColor(color, "rgb", "hex");
-      if (testColor) {
-        inputs.value.hex = testColor;
-      }
-    },
-    hsl: (color: number[]) => {
-      const [h, s, l] = color;
-      inputs.value.h = h;
-      inputs.value.s = s;
-      inputs.value.l = l;
-    },
-    rgb: (color: number[]) => {
-      const [r, g, b] = color;
-      inputs.value.r = r;
-      inputs.value.g = g;
-      inputs.value.b = b;
-    },
-    a: (value: number) => {
-      inputs.value.a = mergedOptions.value.allowedAlpha ? value : 1;
-    }
+    hex: (color: { r: number; g: number; b: number }) =>
+      useColors(useColorsOptions.value).updateInput.hex(
+        color,
+        alpha.value,
+        (value) => (inputs.value.hex = value)
+      ),
+    hsl: (color: number[]) =>
+      useColors(useColorsOptions.value).updateInput.hsl(
+        color,
+        (value) => (inputs.value = { ...inputs.value, ...value })
+      ),
+    rgb: (color: number[]) =>
+      useColors(useColorsOptions.value).updateInput.rgb(
+        color,
+        (value) => (inputs.value = { ...inputs.value, ...value })
+      ),
+    a: (value: number) =>
+      useColors(useColorsOptions.value).updateInput.alpha(
+        value,
+        (value) => (inputs.value.a = value)
+      )
   };
 
   const updateInputsAll = () => {
@@ -162,36 +135,18 @@ export default (
   };
 
   const updateColor = () => {
-    let searchColor: Color | null = null;
-    for (let i = 0; i < colorStops.length - 1; i++) {
-      if (
-        positionColor.value >= colorStops[i].position &&
-        positionColor.value <= colorStops[i + 1].position
-      ) {
-        const percentage =
-          (positionColor.value - colorStops[i].position) /
-          (colorStops[i + 1].position - colorStops[i].position);
-        searchColor = interpolateColors(colorStops[i].color, colorStops[i + 1].color, percentage);
-        break;
-      }
-    }
-    if (searchColor) {
-      color.value = searchColor;
+    positionHueToColor(positionColor.value, (value) => {
+      color.value = value;
       updateColorSelected();
       updateInputsAll();
-    }
+    });
   };
 
   const updateColorSelected = () => {
-    const [x, y] = positionsMain.value;
-    const percentageX = x / 100;
-    const percentageY = y / 100;
-    const saturationColor = interpolateColors([255, 255, 255], color.value, percentageX);
-    const searchColor = interpolateColors(saturationColor, [0, 0, 0], percentageY);
-    if (searchColor) {
-      colorSelected.value = searchColor;
+    positionsMainToSelectedColor(positionsMain.value, color.value, (value) => {
+      colorSelected.value = value.color;
       updateInputsAll();
-    }
+    });
   };
 
   // INPUTS
@@ -208,7 +163,6 @@ export default (
   });
 
   const updateInputs = (value: string | number, mode: ModeInput) => {
-    //Verifier si la valeur est un nombre sinon retourner l'ancienne valeur de l'input
     if (isNaN(Number(value)) && mode !== "hex") {
       return;
     }
@@ -221,7 +175,7 @@ export default (
 
       updateInput.hex(arrayColorToObjectColor(colorSelected.value, "rgb"));
 
-      positionToSelectedColor();
+      colorSelectedToHuePositionsColors();
     }
 
     if (mode === "r" || mode === "g" || mode === "b") {
@@ -230,7 +184,7 @@ export default (
       const hsl = useFormatColor(color, "rgb", "hsl");
       updateInput.hsl(hsl);
       updateInput.hex(color);
-      positionToSelectedColor();
+      colorSelectedToHuePositionsColors();
     }
 
     if (mode === "h" || mode === "s" || mode === "l") {
@@ -242,7 +196,7 @@ export default (
       updateInput.rgb(rgb);
       colorSelected.value = [rgb[0], rgb[1], rgb[2]];
       updateInput.hex(arrayColorToObjectColor(colorSelected.value, "rgb"));
-      positionToSelectedColor();
+      colorSelectedToHuePositionsColors();
     }
 
     if (mode === "hex") {
@@ -259,38 +213,7 @@ export default (
       alpha.value = mergedOptions.value.allowedAlpha ? a : 1;
       positionAlpha.value = mergedOptions.value.allowedAlpha ? a : 1;
 
-      positionToSelectedColor();
-    }
-  };
-
-  const positionToSelectedColor = () => {
-    const sortedIndices = colorSelected.value
-      .map((value, index) => ({ value, index }))
-      .sort((a, b) => a.value - b.value)
-      .map((item) => item.index);
-
-    const [minIndex, mediumIndex, maxIndex] = sortedIndices;
-    const minValue = colorSelected.value[minIndex];
-    const mediumValue = colorSelected.value[mediumIndex];
-    const maxValue = colorSelected.value[maxIndex];
-
-    if (minValue === mediumValue && mediumValue === maxValue) {
-      color.value = [255, 0, 0];
-      positionsMain.value = [0, ((255 - maxValue) * 100) / 255];
-      positionColor.value = 0;
-    } else {
-      const normalizedValue = (mediumValue - minValue) / (maxValue - minValue);
-      const initializeColor: Color = [0, 0, 0];
-      initializeColor[minIndex] = 0;
-      initializeColor[maxIndex] = 255;
-      initializeColor[mediumIndex] = Math.round(255 * normalizedValue);
-
-      color.value = initializeColor;
-      positionsMain.value = [
-        ((maxValue - minValue) / maxValue) * 100,
-        ((255 - maxValue) / 255) * 100
-      ];
-      positionColor.value = positionInSlider(initializeColor);
+      colorSelectedToHuePositionsColors();
     }
   };
 
@@ -298,11 +221,19 @@ export default (
   const mode = ref<AcceptedMode>("rgb");
 
   onMounted(() => {
-    initializeColor(mergedOptions.value.defaultValue);
+    initializeColor(mergedOptions, (value) => {
+      colorSelected.value = value.colorSelected;
+      if (value.alpha !== undefined && value.positionAlpha !== undefined) {
+        alpha.value = value.alpha;
+        positionAlpha.value = value.positionAlpha;
+      }
+      updateInputsAll();
+      colorSelectedToHuePositionsColors();
+    });
   });
 
-  watch(mergedOptions, () => {
-    if (!mergedOptions.value.allowedAlpha) {
+  watch(useColorsOptions, () => {
+    if (!useColorsOptions.value.allowedAlpha) {
       positionAlpha.value = 1;
       updateAlpha();
     }
@@ -310,41 +241,19 @@ export default (
     updateInput.hex(arrayColorToObjectColor(colorSelected.value, "rgb"));
   });
 
-  watch([colorSelected, alpha], () => {
-    if (mergedOptions.value.colorFormat === "rgb") {
-      const data = {
-        r: colorSelected.value[0],
-        g: colorSelected.value[1],
-        b: colorSelected.value[2]
-      };
-      if (mergedOptions.value.allowedAlpha) {
-        (data as RGBA).a = alpha.value;
-      }
-      modelValue.value = data;
-    }
-
-    if (mergedOptions.value.colorFormat === "hsl") {
-      const data: HSLA | HSL = {
-        h: inputs.value.h,
-        s: inputs.value.s,
-        l: inputs.value.l
-      };
-      if (mergedOptions.value.allowedAlpha) {
-        (data as HSLA).a = alpha.value;
-      }
-      modelValue.value = data;
-    }
-
-    if (mergedOptions.value.colorFormat === "hex") {
-      modelValue.value = inputs.value.hex;
-    }
+  watch([colorSelected, alpha, useColorsOptions], () => {
+    useColors(useColorsOptions.value).updateModelValue(modelValue, {
+      colorSelected: colorSelected.value,
+      inputs: inputs.value,
+      alpha: alpha.value
+    });
   });
 
   const setColor = (color: RGBA) => {
     colorSelected.value = [color.r, color.g, color.b];
     updateInputs(mergedOptions.value.allowedAlpha ? color.a : 1, "a");
     updateInputsAll();
-    positionToSelectedColor();
+    colorSelectedToHuePositionsColors();
   };
 
   return {

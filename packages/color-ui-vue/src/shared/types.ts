@@ -20,6 +20,7 @@ export type ColorFormat = "rgb" | "hsl" | "hex";
  * Color UI
  * */
 export type ColorSelected = RGB | RGBA | HSL | HSLA | HEX | HEXA;
+export type SliderColorSelected = RGB | HSL | HEX;
 
 export type AcceptedMode = "hsl" | "rgb" | "hex";
 
@@ -39,24 +40,8 @@ export type InputColor = {
   [key: string]: number | string;
 };
 
-export type Color = [number, number, number];
+export type Color = number[];
 export type Alpha = number;
 
-export type Positions = [number, number];
+export type Positions = number[];
 export type Position = number;
-
-export type ColorUiOptions = {
-  allowedAlpha?: boolean;
-  colorFormat?: ColorFormat;
-  acceptedMode?: AcceptedMode[];
-  historyLimit?: number;
-  historyDefault?: { color: number[]; alpha: number }[];
-};
-
-export type ColorUiOptionsMerged = ColorUiOptions & {
-  allowedAlpha: boolean;
-  defaultValue: ColorSelected;
-  colorFormat: ColorFormat;
-  acceptedMode: AcceptedMode[];
-  historyLimit: number;
-};

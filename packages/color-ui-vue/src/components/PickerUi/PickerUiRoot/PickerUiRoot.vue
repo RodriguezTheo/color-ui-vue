@@ -56,7 +56,7 @@ export type PickerUiRootProvider = {
   updateAlpha: () => void;
   positionAlpha: Ref<number>;
   positionColor: Ref<number>;
-  color: Ref<[number, number, number]>;
+  color: Ref<number[]>;
   updateColorSelected: () => void;
   updateColor: () => void;
   colorSelected: Ref<number[]>;
