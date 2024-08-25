@@ -1,14 +1,24 @@
-<script lang="ts"></script>
+<script lang="ts">
+import type { PrimitiveProps } from "radix-vue";
+
+export type SliderAreaThumbProps = PrimitiveProps & {};
+</script>
 
 <script setup lang="ts">
+import { Primitive } from "radix-vue";
 import { injectSliderAreaRootContext } from "@/components/Base/SliderArea/context";
 
 const rootContext = injectSliderAreaRootContext();
 const { onDown, onUp, onArrowKeyDown, onArrowKeyUp } = rootContext.events();
+
+const props = withDefaults(defineProps<SliderAreaThumbProps>(), {
+  as: "span"
+});
 </script>
 
 <template>
-  <span
+  <Primitive
+    v-bind="props"
     role="slider"
     :ref="rootContext.thumbElement"
     :aria-disabled="rootContext.disabled.value"
@@ -25,7 +35,9 @@ const { onDown, onUp, onArrowKeyDown, onArrowKeyUp } = rootContext.events();
     @touchend="onUp"
     @keydown="onArrowKeyDown"
     @keyup="onArrowKeyUp"
-  />
+  >
+    <slot />
+  </Primitive>
 </template>
 
 <style scoped></style>

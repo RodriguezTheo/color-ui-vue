@@ -1,30 +1,31 @@
 <script lang="ts">
 import type { Direction, Orientation } from "@/shared/types";
 import type { ModelRef, Ref } from "vue";
+import type { PrimitiveProps } from "radix-vue";
 
-export interface SliderAreaRootProps {
+export interface SliderAreaRootProps extends PrimitiveProps {
   /** When `true`, prevents the user from interacting with the slider. */
   disabled?: boolean;
   /** The controlled value of the slider area. Can be bind as `v-model`. */
-  modelValue?: [number, number];
+  modelValue?: number[];
   /** The orientation of the slider. */
   orientation?: Orientation;
   /** The reading direction of the slider. */
   dir?: Direction;
   /** The minimum value for the range. */
-  min?: [number, number];
+  min?: number[];
   /** The maximum value for the range. */
-  max?: [number, number];
+  max?: number[];
   /** The reactive color */
-  color: [number, number, number];
+  color: number[];
 }
 
 export interface SliderAreaRootProvider {
-  modelValue: ModelRef<[number, number]>;
+  modelValue: ModelRef<number[]>;
   orientation: Ref<Orientation>;
   disabled: Ref<boolean>;
-  min: Ref<[number, number]>;
-  max: Ref<[number, number]>;
+  min: Ref<number[]>;
+  max: Ref<number[]>;
   events: () => {
     onUp: () => void;
     onDown: (e: MouseEvent | TouchEvent) => void;
@@ -40,8 +41,10 @@ import { computed, onBeforeUnmount, onMounted, ref, toRefs } from "vue";
 import { provideSliderAreaRootContext } from "@/components/Base/SliderArea/context";
 import { useMouseInElement } from "@vueuse/core";
 import { ARROW_KEYS, PAGE_KEYS } from "@/components/Base/SliderArea/utils";
+import { Primitive, useForwardExpose } from "radix-vue";
 
 const props = withDefaults(defineProps<SliderAreaRootProps>(), {
+  as: "div",
   max: () => [100, 100],
   min: () => [0, 0],
   disabled: false,
@@ -51,29 +54,30 @@ const props = withDefaults(defineProps<SliderAreaRootProps>(), {
 
 const { disabled, min, dir, max, orientation } = toRefs(props);
 
-const vModel = defineModel<[number, number]>("modelValue", {
+const vModel = defineModel<number[]>("modelValue", {
   default: [0, 0]
 });
 
-const position = ref<[number, number]>([0, 0]);
+const position = ref<number[]>([0, 0]);
 
-const containerRef = ref<HTMLElement | null>(null);
+const { forwardRef, currentElement } = useForwardExpose();
+
 const thumbElement = ref<HTMLElement | null>(null);
 const isSliding = ref(false);
 
-const { elementX, elementY, elementHeight, elementWidth } = useMouseInElement(containerRef);
+const { elementX, elementY, elementHeight, elementWidth } = useMouseInElement(currentElement);
 
 const roundToStep = (value: number, step: number) => {
   return Math.floor(value / step) * step;
 };
 
-const updateModelValue = (value: [number, number]) => {
-  if (!containerRef.value) {
+const updateModelValue = (value: number[]) => {
+  if (!currentElement.value) {
     return;
   }
 
   const [x, y] = value;
-  let newPosition: [number, number] = [0, 0];
+  let newPosition: number[] = [0, 0];
 
   if (x === 0) {
     newPosition[0] = props.min[0];
@@ -101,11 +105,11 @@ const updateModelValue = (value: [number, number]) => {
 };
 
 const updatePositions = () => {
-  if (!containerRef.value) {
+  if (!currentElement.value) {
     return;
   }
 
-  const { width, height } = containerRef.value.getBoundingClientRect();
+  const { width, height } = currentElement.value.getBoundingClientRect();
   const x = (vModel.value[0] / (props.max[0] - props.min[0])) * width;
   const y = (vModel.value[1] / (props.max[1] - props.min[1])) * height;
 
@@ -113,17 +117,14 @@ const updatePositions = () => {
 };
 
 const events = () => {
-  const onDrag = (value: [number, number]) => {
-    if (!containerRef.value) {
+  const onDrag = (value: number[]) => {
+    if (!currentElement.value) {
       return;
     }
 
     const [x, y] = value;
     const [stepX, stepY] = [1, 1];
-    let newPosition: [number, number] = [
-      Math.floor(x / stepX) * stepX,
-      Math.floor(y / stepY) * stepY
-    ];
+    let newPosition: number[] = [Math.floor(x / stepX) * stepX, Math.floor(y / stepY) * stepY];
 
     if (x === elementWidth.value) {
       newPosition[0] = x;
@@ -142,7 +143,7 @@ const events = () => {
   };
 
   const onDown = (e: MouseEvent | TouchEvent) => {
-    if (props.disabled || !containerRef.value) {
+    if (props.disabled || !currentElement.value) {
       return;
     }
 
@@ -168,7 +169,7 @@ const events = () => {
   };
 
   const onMove = (e: MouseEvent | TouchEvent) => {
-    if (!containerRef.value) {
+    if (!currentElement.value) {
       return;
     }
 
@@ -211,14 +212,14 @@ const events = () => {
   };
 
   const onArrowKeyDown = (e: KeyboardEvent) => {
-    if (props.disabled || !containerRef.value) {
+    if (props.disabled || !currentElement.value) {
       return;
     }
 
     isSliding.value = true;
 
     let keyPos = position.value;
-    const { width, height } = containerRef.value.getBoundingClientRect();
+    const { width, height } = currentElement.value.getBoundingClientRect();
 
     if (e.key === "ArrowUp") {
       keyPos[1] = Math.max(0, keyPos[1] - (e.shiftKey ? 10 : 1));
@@ -269,7 +270,7 @@ provideSliderAreaRootContext({
 });
 
 onMounted(() => {
-  if (containerRef.value) {
+  if (currentElement.value) {
     updatePositions();
   }
 });
@@ -285,8 +286,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    ref="containerRef"
+  <Primitive
+    :as="props.as"
+    :as-child="props.asChild"
+    :ref="forwardRef"
     :dir="dir"
     :data-orientation="orientation"
     :aria-disabled="disabled"
@@ -330,7 +333,7 @@ onBeforeUnmount(() => {
     "
   >
     <slot />
-  </div>
+  </Primitive>
 </template>
 
 <style scoped></style>
