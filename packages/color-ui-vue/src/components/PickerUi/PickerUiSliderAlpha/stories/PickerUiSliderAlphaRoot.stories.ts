@@ -43,3 +43,28 @@ export const Default: Story = {
     </PickerUiRoot>`
   })
 };
+
+export const AsChild: Story = {
+  render: (args) => ({
+    components: { PickerUiSliderAlphaRoot, PickerUiSliderAlphaThumb, PickerUiRoot },
+    data: () => ({ sliderValue: 50 }),
+    setup: () => {
+      return { args };
+    },
+    template: `<PickerUiRoot allowed-alpha> 
+        <PickerUiSliderAlphaRoot
+        v-model="sliderValue"
+        :orientation="args.orientation"
+        :disabled="args.disabled"
+        :class="[args.orientation === 'horizontal' ? 'h-3 w-full' : 'w-3 h-40']"
+        as-child
+        >
+          <div  class="relative flex h-3 touch-none select-none items-center justify-center rounded-full">
+          <PickerUiSliderAlphaThumb           
+            class="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+          />
+          </div>
+        </PickerUiSliderAlphaRoot>
+    </PickerUiRoot>`
+  })
+};

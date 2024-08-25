@@ -1,9 +1,21 @@
+<script lang="ts">
+import type { SliderAlphaThumbProps } from "@/components/Base/SliderAlpha";
+
+export type PickerUiSliderAlphaThumbProps = SliderAlphaThumbProps & {};
+</script>
+
 <script setup lang="ts">
-import { SliderThumb } from "@/components/Base/Slider";
+import SliderAlphaThumb from "@/components/Base/SliderAlpha/SliderAlphaThumb.vue";
+
+const props = withDefaults(defineProps<PickerUiSliderAlphaThumbProps>(), {
+  as: "span"
+});
 </script>
 
 <template>
-  <SliderThumb />
+  <SliderAlphaThumb v-bind="props">
+    <slot />
+  </SliderAlphaThumb>
 </template>
 
 <style scoped></style>
