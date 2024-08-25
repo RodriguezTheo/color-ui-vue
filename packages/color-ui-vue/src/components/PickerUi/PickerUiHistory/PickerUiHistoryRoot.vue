@@ -41,7 +41,7 @@ onMounted(() => {
 let isInitial = true;
 const debouncedUpdateHistory = useDebounceFn((newColor) => {
   rootContext.history().create({ color: newColor.color, alpha: newColor.alpha });
-}, 300);
+}, 1000);
 
 watch([rootContext.colorSelected, rootContext.alpha], () => {
   if (isInitial) {
