@@ -7,6 +7,7 @@ import { computed, ref } from "vue";
 const meta = {
   title: "PickerUi/SliderMain",
   component: PickerUiSliderMainRoot,
+  subcomponents: { PickerUiSliderMainThumb },
   tags: ["autodocs"],
   argTypes: {
     disabled: { control: "boolean" },
@@ -49,6 +50,22 @@ export const Default: Story = {
               <PickerUiSliderMainThumb
                 class="block h-5 w-5 rounded-full cursor-pointer data-[disabled=true]:cursor-not-allowed border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
               />
+           </PickerUiSliderMainRoot>`
+  })
+};
+
+export const AsChild: Story = {
+  render: (args) => ({
+    components: { PickerUiSliderMainRoot, PickerUiSliderMainThumb },
+    setup: () => {
+      return { args };
+    },
+    template: `<PickerUiSliderMainRoot class="group outline-none h-40 w-80 block" :disabled="args.disabled" :orientation="args.orientation" as-child>
+              <span>
+              <PickerUiSliderMainThumb
+                class="block h-5 w-5 rounded-full cursor-pointer data-[disabled=true]:cursor-not-allowed border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+              />
+              </span>
            </PickerUiSliderMainRoot>`
   })
 };

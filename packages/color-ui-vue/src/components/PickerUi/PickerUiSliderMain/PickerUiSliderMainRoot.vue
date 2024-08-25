@@ -1,5 +1,7 @@
 <script lang="ts">
-export type PickerUiSliderMainRootProps = {
+import type { PrimitiveProps } from "radix-vue";
+
+export type PickerUiSliderMainRootProps = PrimitiveProps & {
   /** When `true`, prevents the user from interacting with the slider. */
   disabled?: boolean;
   /** The orientation of the slider. */
