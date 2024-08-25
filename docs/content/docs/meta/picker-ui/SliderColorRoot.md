@@ -1,6 +1,6 @@
 #### Root
 
-The base of the alpha slider.
+The base of the color slider.
 
 <PropsTable :data="[
 {
@@ -15,19 +15,29 @@ The base of the alpha slider.
 'description': '<p>When <code>true</code>, prevents the user from interacting with the slider.</p>\n',
 'type': 'boolean',
 'required': false,
-},
-{
-'name': 'hideBackground',
-'description': '<p>Show carret background if alpha is <code>true</code>.</p>\n',
-'type': 'boolean',
-'required': false,
-'default': 'false'
-},
+}
 ]" />
 
 #### Thumb
 
-Need to be placed inside the `SliderAlphaRoot`.
+The thumb of the slider.
+Need to be placed inside the `SliderColorRoot`.
+
+<PropsTable :data="[
+{
+'name': 'as',
+'description': '<p>The element or component this component should render as. Can be overwrite by <code>asChild</code></p>\n',
+'type': 'AsTag | Component',
+'required': false,
+'default': '\'span\''
+},
+{
+'name': 'asChild',
+'description': '<p>Change the default rendered element for the one passed as a child, merging their props and behavior.</p>\n<p>Read the <a href=\'https://www.radix-vue.com/guides/composition.html\'>Radix-vue composition</a> guide for more details.</p>\n',
+'type': 'boolean',
+'required': false
+},
+]" />
 
 #### Keyboard Interactions
 

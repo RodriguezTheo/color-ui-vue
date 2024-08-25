@@ -76,6 +76,7 @@ import {
       </PickerUiModeContent>
       <PickerUiModeTrigger />
     </PickerUiModeRoot>
+
     <PickerUiHistoryRoot>
       <PickerUiHistoryList>
         <PickerUiHistoryListItem />
@@ -97,7 +98,7 @@ The base part of the Picker UI.
 </PickerUiRoot>
 ```
 
-<!-- @include: ../meta/PickerUiRoot.md -->
+<!-- @include: ../meta/picker-ui/PickerUiRoot.md -->
 
 ### Slider Main
 
@@ -109,7 +110,7 @@ The main slider to select the color.
 </PickerUiSliderMainRoot>
 ```
 
-<!-- @include: ../meta/SliderMainRoot.md -->
+<!-- @include: ../meta/picker-ui/SliderMainRoot.md -->
 
 ### Render
 
@@ -119,7 +120,7 @@ Used to render the color.
 <PickerUiRenderRoot />
 ```
 
-<!-- @include: ../meta/RenderRoot.md -->
+<!-- @include: ../meta/picker-ui/RenderRoot.md -->
 
 ### Eye Dropper
 
@@ -131,7 +132,7 @@ Used to pick a color from the screen.
 </PickerUiEyeDropperRoot>
 ```
 
-<!-- @include: ../meta/EyeDropperTrigger.md -->
+<!-- @include: ../meta/picker-ui/EyeDropperTrigger.md -->
 
 ### Slider Color
 
@@ -143,7 +144,7 @@ The slider to select the color.
 </PickerUiSliderColorRoot>
 ```
 
-<!-- @include: ../meta/SliderColorRoot.md -->
+<!-- @include: ../meta/picker-ui/SliderColorRoot.md -->
 
 ### Slider Alpha
 
@@ -155,7 +156,7 @@ The slider to select the alpha channel.
 </PickerUiSliderAlphaRoot>
 ```
 
-<!-- @include: ../meta/SliderAlphaRoot.md -->
+<!-- @include: ../meta/picker-ui/SliderAlphaRoot.md -->
 
 ### Mode
 
@@ -173,12 +174,12 @@ The mode to select the color format.
 </PickerUiModeRoot>
 ```
 
-<!-- @include: ../meta/ModeRoot.md -->
-<!-- @include: ../meta/ModeContent.md -->
-<!-- @include: ../meta/ModeTrigger.md -->
-<!-- @include: ../meta/ModeItem.md -->
-<!-- @include: ../meta/ModeItemLabel.md -->
-<!-- @include: ../meta/ModeItemInput.md -->
+<!-- @include: ../meta/picker-ui/ModeRoot.md -->
+<!-- @include: ../meta/picker-ui/ModeContent.md -->
+<!-- @include: ../meta/picker-ui/ModeTrigger.md -->
+<!-- @include: ../meta/picker-ui/ModeItem.md -->
+<!-- @include: ../meta/picker-ui/ModeItemLabel.md -->
+<!-- @include: ../meta/picker-ui/ModeItemInput.md -->
 
 ### History
 
@@ -192,6 +193,6 @@ The history of the selected colors.
 </PickerUiHistoryRoot>
 ```
 
-<!-- @include: ../meta/HistoryRoot.md -->
-<!-- @include: ../meta/HistoryList.md -->
-<!-- @include: ../meta/HistoryListItem.md -->
+<!-- @include: ../meta/picker-ui/HistoryRoot.md -->
+<!-- @include: ../meta/picker-ui/HistoryList.md -->
+<!-- @include: ../meta/picker-ui/HistoryListItem.md -->
