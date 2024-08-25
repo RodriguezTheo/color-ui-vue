@@ -1,7 +1,8 @@
 <script lang="ts">
 import type { Direction, Orientation } from "@/shared/types";
+import type { PrimitiveProps } from "radix-vue";
 
-export type SliderRootProps = {
+export type SliderRootProps = PrimitiveProps & {
   /** The controlled value of the slider. Can be bind as `v-model`. */
   modelValue?: number;
   /** When `true`, prevents the user from interacting with the slider. */
@@ -18,6 +19,7 @@ import { ref, watch } from "vue";
 
 const props = withDefaults(defineProps<SliderRootProps>(), {
   orientation: "horizontal",
+  as: "div",
   dir: "ltr",
   disabled: false
 });
