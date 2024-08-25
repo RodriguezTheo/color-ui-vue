@@ -3,4 +3,7 @@ export {
   type PickerUiSliderColorRootProps
 } from "./PickerUiSliderColorRoot.vue";
 
-export { default as PickerUiSliderColorThumb } from "./PickerUiSliderColorThumb.vue";
+export {
+  default as PickerUiSliderColorThumb,
+  type PickerUiSliderColorThumbProps
+} from "./PickerUiSliderColorThumb.vue";

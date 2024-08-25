@@ -1,9 +1,21 @@
+<script lang="ts">
+import type { PrimitiveProps } from "radix-vue";
+
+export type PickerUiSliderColorThumbProps = PrimitiveProps & {};
+</script>
+
 <script setup lang="ts">
-import { SliderThumb } from "@/components/Base/Slider";
+import SliderHueThumb from "@/components/Base/SliderHue/SliderHueThumb.vue";
+
+const props = withDefaults(defineProps<PickerUiSliderColorThumbProps>(), {
+  as: "span"
+});
 </script>
 
 <template>
-  <SliderThumb />
+  <SliderHueThumb v-bind="props">
+    <slot />
+  </SliderHueThumb>
 </template>
 
 <style scoped></style>
