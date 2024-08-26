@@ -38,6 +38,7 @@ const rootContext = injectPickerUiRootContext();
     :step="0.01"
     :dir="rootContext.dir.value"
     @update:model-value="rootContext.updateAlpha()"
+    @on-change-complete="() => rootContext.onChangeComplete()"
   >
     <slot />
   </SliderAlphaRoot>
