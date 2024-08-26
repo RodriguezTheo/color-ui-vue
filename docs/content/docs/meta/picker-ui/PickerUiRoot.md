@@ -14,7 +14,7 @@
 },
 {
 'name': 'modelValue',
-'description': '<p>The model value of the color picker. </p><br><p>Check <a href=\'/docs/utilities/use-convert-color.html\'>useConvertColor</a> for type declarations.</p>\n',
+'description': '<p>The model value of the color picker. </p><br><p>Check <a href=\'docs/utilities/use-format-color.html\'>useFormatColor</a> for type declarations.</p>\n',
 'type': 'RGB | RGBA | HSL | HSLA | HEX | HEXA',
 'required': false,
 'default': '{ r: 255, g: 0, b: 0 }'
@@ -24,7 +24,7 @@
 'description': '<p>The model value histories of the color picker.</p>',
 'type': '{color: number; alpha: number}[]',
 'required': false,
-'default': '{ r: 255, g: 0, b: 0 }'
+'default': '{color: number; alpha: number}[]'
 },
 {
 'name': 'dir',
@@ -80,5 +80,10 @@
 'name': 'update:histories',
 'description': '<p>Event handler called when the histories change</p>\n',
 'type': '[value: { color: number[]; alpha: number }[]]'
-}
+},
+{
+'name': 'onChangeComplete',
+'description': '<p>Event handler called when the color selected change is completed</p>\n',
+'type': '[value: RGB | RGBA | HSL | HSLA | HEX | HEXA]'
+},
 ]" />

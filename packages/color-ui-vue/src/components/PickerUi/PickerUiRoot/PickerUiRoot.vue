@@ -43,8 +43,30 @@ export type PickerUiRootProps = PrimitiveProps & {
     historyLimit?: number;
     historyDefault?: { color: number[]; alpha: number }[];
   };
+  /**
+   * The model value histories of the color picker.
+   */
   histories?: { color: number[]; alpha: number }[];
+  /**
+   * The model value of the color picker.
+   * Check [useFormatColor](https://color-ui-vue.vercel.app/docs/utilities/use-format-color.html) for type declarations.
+   */
   modelValue?: ColorSelected;
+};
+
+export type PickerUiRootEmits = {
+  /**
+   * Event handler called when the color selected change
+   */
+  "update:modelValue": [payload: ColorSelected];
+  /**
+   * Event handler called when the histories change
+   */
+  "update:histories": [payload: { color: number[]; alpha: number }[]];
+  /**
+   * Event handler called when the color selected change is completed
+   */
+  onChangeComplete: [payload: ColorSelected];
 };
 
 export type PickerUiRootProvider = {
@@ -74,10 +96,11 @@ export type PickerUiRootProvider = {
     clear: () => void;
     init: () => void;
   };
+  onChangeComplete: () => void;
 };
 </script>
 <script setup lang="ts">
-import { computed, onMounted, toRefs, watch } from "vue";
+import { computed, toRefs } from "vue";
 import { providePickerUiRootContext } from "@/components/PickerUi/PickerUiRoot/context";
 import usePickerUi from "@/components/PickerUi/composables/usePickerUi";
 import { Primitive } from "radix-vue";
@@ -94,6 +117,8 @@ const props = withDefaults(defineProps<PickerUiRootProps>(), {
 
 const vModel = defineModel<ColorSelected>();
 const vHistories = defineModel<{ color: number[]; alpha: number }[]>("histories");
+
+const emits = defineEmits<PickerUiRootEmits>();
 
 const { allowedAlpha, acceptedMode, colorFormat, dir, options } = toRefs(props);
 
@@ -126,6 +151,20 @@ const {
   history
 } = usePickerUi(vModel, vHistories, opt, props.defaultValue);
 
+const onChangeComplete = () => {
+  if (vModel.value) {
+    emits("onChangeComplete", vModel.value);
+  }
+
+  const data = {
+    color: colorSelected.value,
+    alpha: alpha.value
+  };
+
+  history().create(data);
+  vHistories.value = histories.value;
+};
+
 providePickerUiRootContext({
   dir,
   containerId: id,
@@ -147,17 +186,8 @@ providePickerUiRootContext({
   updateEyeDropper,
   setColor,
   history,
-  histories
-});
-
-watch(histories, () => {
-  vHistories.value = histories.value;
-});
-
-onMounted(() => {
-  if (!vModel.value) {
-    vModel.value = props.defaultValue;
-  }
+  histories,
+  onChangeComplete
 });
 </script>
 
