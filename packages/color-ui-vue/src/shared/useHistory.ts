@@ -126,14 +126,22 @@ function history(
   options?: Partial<DispatchOptions>,
   cb?: (value: { color: number[]; alpha: number }[]) => void
 ) {
-  const init = () => dispatch({ type: actionTypes.INIT_HISTORY }, options);
-  const remove = (props: HistoryItem) =>
+  const init = () => {
+    dispatch({ type: actionTypes.INIT_HISTORY }, options);
+    cb && cb(state.value.histories);
+  };
+  const remove = (props: HistoryItem) => {
     dispatch({ type: actionTypes.REMOVE_HISTORY, history: props }, options);
-  const clear = () => dispatch({ type: actionTypes.CLEAR_HISTORY }, options);
-  const create = (props: HistoryItem) =>
+    cb && cb(state.value.histories);
+  };
+  const clear = () => {
+    dispatch({ type: actionTypes.CLEAR_HISTORY }, options);
+    cb && cb(state.value.histories);
+  };
+  const create = (props: HistoryItem) => {
     dispatch({ type: actionTypes.ADD_HISTORY, history: props }, options);
-
-  cb && cb(state.value.histories);
+    cb && cb(state.value.histories);
+  };
 
   return {
     remove,
