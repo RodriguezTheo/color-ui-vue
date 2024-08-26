@@ -25,6 +25,7 @@ const rootContext = injectPickerUiRootContext();
     v-model="rootContext.positionColor.value"
     :dir="rootContext.dir.value"
     @update:modelValue="rootContext.updateColor()"
+    @on-change-complete="() => rootContext.onChangeComplete()"
   >
     <slot />
   </SliderHueRoot>
