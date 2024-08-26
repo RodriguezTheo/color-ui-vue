@@ -25,11 +25,12 @@ const rootContext = injectPickerUiRootContext();
   <SliderAreaRoot
     v-bind="props"
     v-model="rootContext.positionsMain.value"
-    @update:model-value="rootContext.updateColorSelected"
+    @update:model-value="() => rootContext.updateColorSelected()"
     :color="rootContext.color.value"
     :dir="rootContext.dir.value"
     :min="[0, 0]"
     :max="[100, 100]"
+    @on-change-complete="() => rootContext.onChangeComplete()"
   >
     <slot />
   </SliderAreaRoot>

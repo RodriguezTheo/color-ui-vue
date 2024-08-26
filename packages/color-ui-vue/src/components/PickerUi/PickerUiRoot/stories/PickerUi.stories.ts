@@ -23,6 +23,7 @@ import PickerUiHistoryList from "@/components/PickerUi/PickerUiHistory/PickerUiH
 import PickerUiHistoryListItem from "@/components/PickerUi/PickerUiHistory/PickerUiHistoryListItem.vue";
 
 import { ref } from "vue";
+import type { ColorSelected } from "@/shared";
 
 const meta = {
   title: "PickerUi/Root",
@@ -82,10 +83,15 @@ export const Default: Story = {
     setup: () => {
       const modelValue = ref(args.modelValue);
       const histories = ref(args.histories);
-      return { args, modelValue, histories };
+      const lastValue = ref<string>("");
+      const getLastUpdate = (value: ColorSelected) => {
+        const date = new Date();
+        lastValue.value = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} / (value : ${JSON.stringify(value)})`;
+      };
+      return { args, modelValue, histories, getLastUpdate, lastValue };
     },
     template: `<div class="flex gap-x-16">
-      <PickerUiRoot v-bind="args" v-model="modelValue" v-model:histories="histories" class="flex flex-col w-80 gap-y-2 px-4 py-4 rounded border">
+      <PickerUiRoot v-bind="args" v-model="modelValue" v-model:histories="histories" @on-change-complete="(value) => getLastUpdate(value)" class="flex flex-col w-80 gap-y-2 px-4 py-4 rounded border">
       <PickerUiSliderMainRoot class="group outline-none h-40 w-full mb-4 rounded-md">
         <PickerUiSliderMainThumb
           class="block h-4 w-4 rounded-full cursor-pointer data-[disabled=true]:cursor-not-allowed border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
@@ -145,12 +151,12 @@ export const Default: Story = {
           <PickerUiModeTrigger v-slot="{mode}" class="mt-2 h-10 w-full px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
             {{mode}}
           </PickerUiModeTrigger>
+        </PickerUiModeRoot>
           <PickerUiHistoryRoot>
             <PickerUiHistoryList class="flex justify-between gap-x-2 mt-2">
               <PickerUiHistoryListItem class="h-8 w-8 rounded-md" />
             </PickerUiHistoryList>
           </PickerUiHistoryRoot>
-        </PickerUiModeRoot>
     </PickerUiRoot>
       <div class="flex flex-col w-80 gap-y-2 px-4 py-4 rounded border">
         <div class="flex justify-center font-semibold underline">OPTIONS</div>
@@ -158,6 +164,7 @@ export const Default: Story = {
          <div>format: {{args.colorFormat}}</div>
           <div>modelValue: {{modelValue}}</div>
           <div>histories: {{histories}}</div>
+          <div>{{lastValue}}</div>
         </div>
       </div>
       </div>`
