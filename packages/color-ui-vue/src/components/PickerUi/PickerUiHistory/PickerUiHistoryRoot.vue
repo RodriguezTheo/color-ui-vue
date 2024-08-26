@@ -16,9 +16,8 @@ export type PickerUiHistoryRootProvider = {
 
 <script setup lang="ts">
 import { providePickerUiHistoryContext } from "@/components/PickerUi/PickerUiHistory/context";
-import { onMounted, toRefs, watch } from "vue";
+import { onMounted, toRefs } from "vue";
 import { injectPickerUiRootContext } from "@/components/PickerUi/PickerUiRoot/context";
-import { useDebounceFn } from "@vueuse/core";
 
 const props = withDefaults(defineProps<PickerUiHistoryRootProps>(), {
   disabled: false,
@@ -36,23 +35,6 @@ providePickerUiHistoryContext({
 
 onMounted(() => {
   rootContext.history().init();
-});
-
-let isInitial = true;
-const debouncedUpdateHistory = useDebounceFn((newColor) => {
-  rootContext.history().create({ color: newColor.color, alpha: newColor.alpha });
-}, 1000);
-
-watch([rootContext.colorSelected, rootContext.alpha], () => {
-  if (isInitial) {
-    isInitial = false;
-    return;
-  }
-  const data = {
-    color: rootContext.colorSelected.value,
-    alpha: rootContext.alpha.value
-  };
-  debouncedUpdateHistory(data);
 });
 </script>
 
