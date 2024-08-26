@@ -254,6 +254,10 @@ export default (
     updateInputs(mergedOptions.value.allowedAlpha ? color.a : 1, "a");
     updateInputsAll();
     colorSelectedToHuePositionsColors();
+    history().create({
+      color: [color.r, color.g, color.b],
+      alpha: mergedOptions.value.allowedAlpha ? color.a : 1
+    });
   };
 
   return {
