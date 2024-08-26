@@ -85,6 +85,10 @@ export default (
     colorSelected.value = useFormatColor(value, "hex", "rgb");
     updateInputsAll();
     colorSelectedToHuePositionsColors();
+    history().create({
+      color: colorSelected.value,
+      alpha: mergedOptions.value.allowedAlpha ? alpha.value : 1
+    });
   };
 
   // SLIDERS
