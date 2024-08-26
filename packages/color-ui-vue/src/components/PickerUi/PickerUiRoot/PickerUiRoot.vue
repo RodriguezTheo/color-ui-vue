@@ -10,8 +10,9 @@ import type {
   RGBA
 } from "@/shared/types";
 import type { Ref } from "vue";
+import type { PrimitiveProps } from "radix-vue";
 
-export type PickerUiRootProps = {
+export type PickerUiRootProps = PrimitiveProps & {
   /**
    * The reading direction of Color Ui when applicable. <br> If omitted assumes LTR (left-to-right) reading mode.
    * @defaultValue "ltr"
@@ -38,7 +39,7 @@ export type PickerUiRootProps = {
    * Options
    * @defaultValue {historyLimit: 8, defaultHistory: [{ color: number[], alpha: number }]}
    */
-  options: {
+  options?: {
     historyLimit?: number;
     historyDefault?: { color: number[]; alpha: number }[];
   };
@@ -79,8 +80,10 @@ export type PickerUiRootProvider = {
 import { computed, onMounted, toRefs, watch } from "vue";
 import { providePickerUiRootContext } from "@/components/PickerUi/PickerUiRoot/context";
 import usePickerUi from "@/components/PickerUi/composables/usePickerUi";
+import { Primitive } from "radix-vue";
 
 const props = withDefaults(defineProps<PickerUiRootProps>(), {
+  as: "div",
   orientation: "horizontal",
   dir: "ltr",
   acceptedMode: () => ["rgb", "hsl", "hex"],
@@ -159,7 +162,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <slot />
+  <Primitive v-bind="$attrs" :as="props.as" :as-child="props.asChild">
+    <slot />
+  </Primitive>
 </template>
 
 <style scoped></style>

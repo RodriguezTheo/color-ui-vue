@@ -28,7 +28,7 @@ const color = ref({ r: 49, g: 168, b: 94, a: 1 });
 </script>
 
 <template>
-  <PickerUiRoot v-model="color" allowed-alpha :options="{ historyLimit: 7 }">
+  <PickerUiRoot v-model="color" allowed-alpha :options="{ historyLimit: 7 }" class="PickerUi">
     <PickerUiSliderMainRoot class="SliderArea">
       <PickerUiSliderMainThumb class="SliderAreaThumb" />
     </PickerUiSliderMainRoot>

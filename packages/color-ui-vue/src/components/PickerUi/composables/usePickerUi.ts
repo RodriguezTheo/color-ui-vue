@@ -241,7 +241,7 @@ export default (
     updateInput.hex(arrayColorToObjectColor(colorSelected.value, "rgb"));
   });
 
-  watch([colorSelected, alpha, useColorsOptions], () => {
+  watch([colorSelected, alpha], () => {
     useColors(useColorsOptions.value).updateModelValue(modelValue, {
       colorSelected: colorSelected.value,
       inputs: inputs.value,
