@@ -4,8 +4,9 @@ import type { ModeInput } from "@/shared/types";
 import type { Ref } from "vue";
 
 export type PickerUiModeItemProps = PrimitiveProps & {
-  /** Mode input value */
+  /** Mode input value. */
   value: ModeInput;
+  /** When `true`, prevents the user from interacting with mode item. */
   disabled?: boolean;
 };
 
@@ -27,6 +28,7 @@ import {
   providePickerUiModeItemContext
 } from "@/components/PickerUi/PickerUiMode/context";
 import { Primitive } from "radix-vue";
+import { useDebounceFn } from "@vueuse/core";
 
 const props = withDefaults(defineProps<PickerUiModeItemProps>(), {
   as: "div"
@@ -43,9 +45,14 @@ const allowedAlpha = computed(() => {
 
 const modelValue = ref<number | string>(rootContext.inputs.value[props.value]);
 
+const debouncedUpdateHistory = useDebounceFn(() => {
+  rootContext.onChangeComplete();
+}, 500);
+
 const updateInput = (event: Event) => {
   const { value } = event.target as HTMLInputElement;
   rootContext.updateInputs(value, props.value);
+  debouncedUpdateHistory();
 };
 
 const contentId = computed(() => {
