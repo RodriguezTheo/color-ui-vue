@@ -11,6 +11,7 @@ export type SliderAlphaRootProps = SliderRootProps & {
 
 export type SliderAlphaRootEmits = {
   "update:modelValue": [payload: number | undefined];
+  onChangeComplete: [payload: number];
 };
 
 export type SliderAlphaProvider = {

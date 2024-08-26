@@ -4,6 +4,7 @@ import type { SliderRootProps } from "@/components/Base/Slider";
 export type SliderHueRootProps = SliderRootProps & {};
 export type SliderHueRootEmits = {
   "update:modelValue": [payload: number | undefined];
+  onChangeComplete: [payload: number];
 };
 </script>
 

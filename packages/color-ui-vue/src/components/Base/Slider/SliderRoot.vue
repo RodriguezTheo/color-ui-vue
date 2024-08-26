@@ -12,6 +12,11 @@ export type SliderRootProps = PrimitiveProps & {
   /** The reading direction of the slider. */
   dir?: Direction;
 };
+
+export type SliderRootEmits = {
+  "update:modelValue": [payload: number | undefined];
+  onChangeComplete: [payload: number];
+};
 </script>
 <script setup lang="ts">
 import { SliderRoot } from "radix-vue";
@@ -27,6 +32,8 @@ const props = withDefaults(defineProps<SliderRootProps>(), {
 const vModel = defineModel<number>("modelValue", {
   default: 0
 });
+
+const emits = defineEmits<SliderRootEmits>();
 
 const sliderValue = ref<number[]>([vModel.value]);
 const updateVModel = (value: number[] | undefined) => {
@@ -51,7 +58,17 @@ watch(
     :min="0"
     :max="100"
     :step="0.01"
-    @update:model-value="updateVModel"
+    @update:model-value="
+      (value) => {
+        updateVModel(value);
+        emits('update:modelValue', value ? value[0] : value);
+      }
+    "
+    @value-commit="
+      (event) => {
+        emits('onChangeComplete', event[0]);
+      }
+    "
   >
     <slot />
   </SliderRoot>

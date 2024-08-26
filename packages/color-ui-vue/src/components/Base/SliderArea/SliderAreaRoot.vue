@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Direction, Orientation } from "@/shared/types";
-import type { ModelRef, Ref } from "vue";
+import type { Ref } from "vue";
 import type { PrimitiveProps } from "radix-vue";
 
 export interface SliderAreaRootProps extends PrimitiveProps {
@@ -21,7 +21,7 @@ export interface SliderAreaRootProps extends PrimitiveProps {
 }
 
 export interface SliderAreaRootProvider {
-  modelValue: ModelRef<number[]>;
+  modelValue: Ref<number[]>;
   orientation: Ref<Orientation>;
   disabled: Ref<boolean>;
   min: Ref<number[]>;
@@ -33,7 +33,13 @@ export interface SliderAreaRootProvider {
     onArrowKeyUp: () => void;
   };
   thumbElement: Ref<HTMLElement | null>;
+  onChangeComplete: () => void;
 }
+
+export type SliderAreaRootEmits = {
+  "update:modelValue": [payload: number[] | undefined];
+  onChangeComplete: [payload: number[]];
+};
 </script>
 
 <script setup lang="ts">
@@ -52,6 +58,8 @@ const props = withDefaults(defineProps<SliderAreaRootProps>(), {
   dir: "ltr"
 });
 
+const emits = defineEmits<SliderAreaRootEmits>();
+
 const { disabled, min, dir, max, orientation } = toRefs(props);
 
 const vModel = defineModel<number[]>("modelValue", {
@@ -69,6 +77,10 @@ const { elementX, elementY, elementHeight, elementWidth } = useMouseInElement(cu
 
 const roundToStep = (value: number, step: number) => {
   return Math.floor(value / step) * step;
+};
+
+const onChangeComplete = () => {
+  emits("onChangeComplete", vModel.value);
 };
 
 const updateModelValue = (value: number[]) => {
@@ -243,6 +255,7 @@ const events = () => {
         : (keyPos[1] = Math.min(height, keyPos[1] + 10));
     }
 
+    emits("onChangeComplete", keyPos);
     onDrag(keyPos);
   };
 
@@ -266,7 +279,8 @@ provideSliderAreaRootContext({
   max,
   min,
   events,
-  thumbElement
+  thumbElement,
+  onChangeComplete
 });
 
 onMounted(() => {

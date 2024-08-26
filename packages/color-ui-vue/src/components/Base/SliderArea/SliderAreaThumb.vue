@@ -30,9 +30,19 @@ const props = withDefaults(defineProps<SliderAreaThumbProps>(), {
     :tabindex="rootContext.disabled.value ? -1 : 0"
     :style="`position: absolute; transform: translate(-50%, -50%); left: ${rootContext.modelValue.value[0]}%; top: ${rootContext.modelValue.value[1]}%; z-index: 1;`"
     @mousedown="onDown"
-    @mouseup="onUp"
+    @mouseup="
+      () => {
+        onUp();
+        rootContext.onChangeComplete();
+      }
+    "
     @touchstart.passive="onDown"
-    @touchend="onUp"
+    @touchend="
+      () => {
+        onUp();
+        rootContext.onChangeComplete();
+      }
+    "
     @keydown="onArrowKeyDown"
     @keyup="onArrowKeyUp"
   >
