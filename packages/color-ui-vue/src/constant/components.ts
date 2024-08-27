@@ -18,7 +18,13 @@ export const components = {
     "PickerUiModeItem",
     "PickerUiModeItemLabel",
     "PickerUiModeItemInput"
-  ]
+  ],
+
+  sliderUiRoot: ["SliderUiRoot"],
+
+  sliderUiSliderColor: ["SliderUiSliderColorRoot", "SliderUiSliderColorThumb"],
+
+  sliderUiSwatch: ["SliderUiSwatchRoot", "SliderUiSwatchItem"]
 };
 
 export const utils = {
