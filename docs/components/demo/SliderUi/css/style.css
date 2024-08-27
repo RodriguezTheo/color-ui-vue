@@ -1,0 +1,79 @@
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --radius: 0.5rem;
+}
+
+.SliderUi {
+  display: flex;
+  flex-direction: column;
+  width: 24rem;
+  row-gap: 1rem;
+  padding: 1rem;
+  border-radius: calc(var(--radius) - 2px);
+  border-width: 1px;
+  border-color: hsl(var(--border));
+  background-color: hsl(var(--background));
+}
+
+.SliderRoot {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  height: 0.75rem /* 12px */;
+  width: 100%;
+}
+
+.SliderThumb {
+  display: block;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 100%;
+  border-width: 2px;
+  border-color: hsl(var(--primary));
+  background-color: hsl(var(--background));
+}
+
+.SliderThumb:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.SwatchRoot {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.SwatchItem {
+  height: 1rem;
+  width: 100%;
+  transition:
+    width 0.2s,
+    transform 0.2s;
+}
+
+.SwatchItem:first-child {
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+}
+
+.SwatchItem:last-child {
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+.SwatchItem:hover {
+  transform: scale(1.1);
+}

@@ -41,6 +41,10 @@ const sideNav = [
       {
         text: "Picker UI",
         link: "/docs/components/picker-ui"
+      },
+      {
+        text: "Slider UI",
+        link: "/docs/components/slider-ui"
       }
     ]
   },
