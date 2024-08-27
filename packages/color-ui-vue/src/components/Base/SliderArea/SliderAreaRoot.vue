@@ -328,7 +328,7 @@ onBeforeUnmount(() => {
         e.preventDefault();
       }
     "
-    @touchmove.passive="
+    @touchmove="
       (e) => {
         e.preventDefault();
         if (thumbElement) {

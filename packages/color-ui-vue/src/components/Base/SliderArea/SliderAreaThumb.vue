@@ -5,14 +5,22 @@ export type SliderAreaThumbProps = PrimitiveProps & {};
 </script>
 
 <script setup lang="ts">
-import { Primitive } from "radix-vue";
+import { Primitive, useForwardExpose } from "radix-vue";
 import { injectSliderAreaRootContext } from "@/components/Base/SliderArea/context";
+import { onMounted } from "vue";
 
 const rootContext = injectSliderAreaRootContext();
+
+const { forwardRef, currentElement: thumbElement } = useForwardExpose();
+
 const { onDown, onUp, onArrowKeyDown, onArrowKeyUp } = rootContext.events();
 
 const props = withDefaults(defineProps<SliderAreaThumbProps>(), {
   as: "span"
+});
+
+onMounted(() => {
+  rootContext.thumbElement.value = thumbElement.value;
 });
 </script>
 
@@ -20,7 +28,7 @@ const props = withDefaults(defineProps<SliderAreaThumbProps>(), {
   <Primitive
     v-bind="props"
     role="slider"
-    :ref="rootContext.thumbElement"
+    :ref="forwardRef"
     :aria-disabled="rootContext.disabled.value"
     :data-disabled="rootContext.disabled.value"
     :aria-valuemin="rootContext.min.value.toString()"
@@ -36,7 +44,7 @@ const props = withDefaults(defineProps<SliderAreaThumbProps>(), {
         rootContext.onChangeComplete();
       }
     "
-    @touchstart.passive="onDown"
+    @touchstart="onDown"
     @touchend="
       () => {
         onUp();
