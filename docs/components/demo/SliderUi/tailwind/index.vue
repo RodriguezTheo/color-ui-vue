@@ -22,7 +22,7 @@ const color = ref({ r: 49, g: 168, b: 94, a: 1 });
     <!-- START / SliderUiRoot -->
     <SliderUiRoot
       v-model="color"
-      class="flex flex-col w-96 gap-y-4 px-4 py-4 rounded-lg border bg-background"
+      class="flex flex-col w-80 md:w-96 gap-y-4 px-4 py-4 rounded-lg border bg-background"
     >
       <SliderUiSliderColorRoot
         class="relative flex touch-none select-none items-center justify-center rounded-full h-3 w-full"

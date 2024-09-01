@@ -17,13 +17,17 @@
 .SliderUi {
   display: flex;
   flex-direction: column;
-  width: 24rem;
+  width: 20rem;
   row-gap: 1rem;
   padding: 1rem;
   border-radius: calc(var(--radius) - 2px);
   border-width: 1px;
   border-color: hsl(var(--border));
   background-color: hsl(var(--background));
+
+  @media (min-width: 768px) {
+    width: 24rem;
+  }
 }
 
 .SliderRoot {
