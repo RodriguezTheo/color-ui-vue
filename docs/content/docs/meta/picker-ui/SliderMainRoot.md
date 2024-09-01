@@ -22,13 +22,6 @@ The base of the main slider.
 'type': 'boolean',
 'required': false,
 },
-{
-'name': 'orientation',
-'description': '<p> The orientation of the slider.</p>\n',
-'type': 'horizontal | vertical',
-'required': false,
-'default': 'horizontal'
-}
 ]" />
 
 #### Thumb
@@ -81,11 +74,11 @@ description: '<span> Decreases the <code>valueY</code>.</span>',
 },
 {
 keys: ['Home'],
-description: 'Sets the <code>valueX</code> to its minimum.',
+description: 'Sets the <code>valueY</code> to its minimum.',
 },
 {
 keys: ['End'],
-description: 'Sets the <code>valueX</code> to its maximum.',
+description: 'Sets the <code>valueY</code> to its maximum.',
 },
 {
 keys: ['Shift + ArrowRight'],
@@ -105,19 +98,19 @@ description: '<span> Decreases <code>valueY</code>.</span>',
 },
 {
 keys: ['Shift + PageUp'],
-description: '<span> Increases the <code>valueX</code>.</span>',
-},
-{
-keys: ['Shift + PageDown'],
 description: '<span> Decreases the <code>valueX</code>.</span>',
 },
 {
+keys: ['Shift + PageDown'],
+description: '<span> Increases the <code>valueX</code>.</span>',
+},
+{
 keys: ['Shift + Home'],
-description: 'Sets the <code>valueY</code> to its minimum.',
+description: 'Sets the <code>valueX</code> to its minimum.',
 },
 {
 keys: ['Shift + End'],
-description: 'Sets the <code>valueY</code> to its maximum.',
+description: 'Sets the <code>valueX</code> to its maximum.',
 },
 ]"
 />
