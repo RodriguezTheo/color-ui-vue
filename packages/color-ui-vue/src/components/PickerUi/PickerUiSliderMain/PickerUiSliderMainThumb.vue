@@ -5,7 +5,7 @@ export type PickerUiSliderMainThumbProps = PrimitiveProps & {};
 </script>
 
 <script setup lang="ts">
-import { SliderAreaThumb } from "@/components/Base/SliderArea";
+import { AreaThumb } from "@/components/Base/Area";
 
 const props = withDefaults(defineProps<PickerUiSliderMainThumbProps>(), {
   as: "span"
@@ -13,9 +13,9 @@ const props = withDefaults(defineProps<PickerUiSliderMainThumbProps>(), {
 </script>
 
 <template>
-  <SliderAreaThumb v-bind="props">
+  <AreaThumb v-bind="props">
     <slot />
-  </SliderAreaThumb>
+  </AreaThumb>
 </template>
 
 <style scoped></style>

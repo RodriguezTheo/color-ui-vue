@@ -10,12 +10,10 @@ const meta = {
   subcomponents: { PickerUiSliderMainThumb },
   tags: ["autodocs"],
   argTypes: {
-    disabled: { control: "boolean" },
-    orientation: { control: "select", options: ["horizontal", "vertical"] }
+    disabled: { control: "boolean" }
   },
   args: {
-    disabled: false,
-    orientation: "horizontal"
+    disabled: false
   },
   decorators: [
     () => ({
