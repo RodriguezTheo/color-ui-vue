@@ -117,6 +117,12 @@ export default (
         color,
         (value) => (inputs.value = { ...inputs.value, ...value })
       ),
+    sl: (color: number[]) =>
+      useColors(useColorsOptions.value).updateInput.hsl(
+        color,
+        (value) =>
+          (inputs.value = { ...inputs.value, ...{ h: inputs.value.h, s: value.s, l: value.l } })
+      ),
     rgb: (color: number[]) =>
       useColors(useColorsOptions.value).updateInput.rgb(
         color,
@@ -129,10 +135,10 @@ export default (
       )
   };
 
-  const updateInputsAll = () => {
+  const updateInputsAll = (onlyColor: boolean = false) => {
     const color = arrayColorToObjectColor(colorSelected.value, "rgb");
     const hsl = useFormatColor(color, "rgb", "hsl");
-    updateInput.hsl(hsl);
+    onlyColor ? updateInput.sl(hsl) : updateInput.hsl(hsl);
     updateInput.hex(color);
     updateInput.rgb(colorSelected.value);
     updateInput.a(alpha.value);
@@ -149,7 +155,7 @@ export default (
   const updateColorSelected = () => {
     positionsMainToSelectedColor(positionsMain.value, color.value, (value) => {
       colorSelected.value = value.color;
-      updateInputsAll();
+      updateInputsAll(true);
     });
   };
 
