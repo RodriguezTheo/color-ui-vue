@@ -21,6 +21,7 @@ export default defineConfig({
   },
   srcDir: "content",
   markdown: markdownOptions,
+
   vite: {
     css: {
       postcss: {

@@ -9,12 +9,12 @@ const mainNav = [
   {
     text: "Components",
     link: "/docs/components/picker-ui"
-  },
-  {
-    text: "Storybook",
-    link: "/storybook/index.html?path=/docs/pickerui-root--docs",
-    target: "_blank"
   }
+  // {
+  //   text: "Storybook",
+  //   link: "/storybook/index.html?path=/docs/pickerui-root--docs",
+  //   target: "_blank"
+  // }
 ];
 
 const sideNav = [

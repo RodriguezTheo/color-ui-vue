@@ -13,7 +13,7 @@
     "story:dev": "pnpm --filter color-ui-vue story:dev",
     "story:build": "pnpm --filter color-ui-vue story:build",
     "docs:dev": "pnpm --filter docs docs:dev",
-    "docs:gen": "pnpm --filter color-ui-vue build && pnpm --filter color-ui-vue story:build && pnpm --filter docs docs:gen",
+    "docs:gen": "pnpm --filter color-ui-vue build && pnpm --filter docs docs:gen",
     "pk:update": "pnpm --filter color-ui-vue build && cd packages/color-ui-vue/ && npm publish"
   },
   "keywords": [],
