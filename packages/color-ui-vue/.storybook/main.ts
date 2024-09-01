@@ -15,6 +15,9 @@ const config: StorybookConfig = {
     options: {
       docgen: "vue-component-meta"
     }
+  },
+  core: {
+    disableTelemetry: true // 👈 Disables telemetry
   }
 };
 export default config;
